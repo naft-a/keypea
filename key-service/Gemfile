@@ -7,10 +7,11 @@ git_source(:github) do |repo_name|
   "https://github.com/#{repo_name}.git"
 end
 
+gem "apia", "~> 3.0"
 gem "rack"
 gem "rack_csrf"
 gem "rack-cors"
-gem "apia", "~> 3.0"
+gem "rspec-core", require: false
 
 group :development do
   gem "pry-remote"
