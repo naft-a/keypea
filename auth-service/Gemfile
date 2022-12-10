@@ -1,0 +1,19 @@
+# frozen_string_literal: true
+
+source "https://rubygems.org"
+
+git_source(:github) do |repo_name|
+  repo_name = "#{repo_name}/#{repo_name}" unless repo_name.include?("/")
+  "https://github.com/#{repo_name}.git"
+end
+
+gem "rack"
+gem "rack_csrf"
+gem "rack-cors"
+gem "apia", "~> 3.0"
+gem "omniauth"
+gem "omniauth-github"
+
+group :development do  
+  gem "pry-remote"
+end
