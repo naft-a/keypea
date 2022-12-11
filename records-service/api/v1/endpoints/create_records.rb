@@ -3,9 +3,9 @@
 module Api
   module V1
     module Endpoints
-      class KeysCreate < Apia::Endpoint
+      class CreateRecords < Apia::Endpoint
 
-        description "Creates a new keypair for a given user"
+        description "Creates a new record for a given user"
         scope "keys"
 
         argument :user_id, type: :string, required: true

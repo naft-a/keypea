@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 require_relative "../authenticator"
-require_relative "./endpoints/keys_create"
-require_relative "./endpoints/keys_list"
+require_relative "./endpoints/create_records"
+require_relative "./endpoints/list_records"
 
 module Api
   module V1
@@ -11,15 +11,15 @@ module Api
       authenticator Authenticator
 
       scopes do
-        add "keys", "Allows keys management"
+        add "records", "Allows keys management"
       end
 
       routes do
         schema
 
         group :keys do
-          get "/keys", endpoint: Endpoints::KeysList
-          post "/keys", endpoint: Endpoints::KeysCreate
+          get "/records", endpoint: Endpoints::ListRecords
+          post "/records", endpoint: Endpoints::CreateRecords
         end
       end
 

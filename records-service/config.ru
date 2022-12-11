@@ -12,6 +12,15 @@ require "api/v1/base"
 require "pry-remote" if ENV["RACK_ENV"] == "development"
 
 # ===== Rack config =====
+logger = Logger.new("log/#{ENV["RACK_ENV"]}.log")
+logger.instance_eval do
+  def write(msg)
+    msg.sub!(/password=\S+/, "password=[FILTERED]")
+    self.send(:<<, msg)
+  end
+end
+
+use Rack::CommonLogger, logger
 use Rack::Session::Cookie, key:'rack.session', expire_after: 2592000, secret: 'TODO:'
 use Rack::Cors do
   allow do
@@ -37,4 +46,4 @@ end
 use Apia::Rack, Api::V1::Base, "/core/v1", development: ENV["RACK_ENV"] == "development"
 
 # ===== Entrypoint =====
-run KeyService
+run RecordService

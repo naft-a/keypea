@@ -15,4 +15,6 @@ gem "rspec", require: false
 
 group :development do
   gem "pry-remote"
+  gem "rubocop", require: false
+  gem "rubocop-rspec", require: false
 end
