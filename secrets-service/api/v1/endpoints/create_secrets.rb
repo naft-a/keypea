@@ -3,10 +3,10 @@
 module Api
   module V1
     module Endpoints
-      class CreateRecords < Apia::Endpoint
+      class CreateSecrets < Apia::Endpoint
 
-        description "Creates a new record for a given user"
-        scope "keys"
+        description "Creates a new secret for a given user"
+        scope "secrets"
 
         argument :user_id, type: :string, required: true
         argument :keypair, type: :string, required: true

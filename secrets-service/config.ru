@@ -53,4 +53,4 @@ end
 use Apia::Rack, Api::V1::Base, "/core/v1", development: ENV["RACK_ENV"] == "development"
 
 # ===== Entrypoint =====
-run RecordService
+run SecretsService

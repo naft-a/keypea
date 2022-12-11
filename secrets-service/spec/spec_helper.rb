@@ -6,8 +6,8 @@ require "apia/rack"
 require "pry-remote"
 
 require_relative "../api/v1/base"
-require_relative "../api/v1/endpoints/list_records"
-require_relative "../api/v1/endpoints/create_records"
+require_relative "../api/v1/endpoints/list_secrets"
+require_relative "../api/v1/endpoints/create_secrets"
 
 RSpec.configure do |config|
   # rack_app = Module.new do

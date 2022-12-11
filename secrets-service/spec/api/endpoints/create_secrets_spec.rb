@@ -4,7 +4,7 @@ require "spec_helper"
 
 include Api::V1
 
-describe Endpoints::ListRecords do
+describe Endpoints::CreateSecrets do
   it "does something" do
     response = Base.test_endpoint(described_class) do |req|
       req.headers["Authorization"] = "Bearer example"

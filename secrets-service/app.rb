@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class RecordService
+class SecretsService
 
   def self.call(env)
     req = Rack::Request.new env

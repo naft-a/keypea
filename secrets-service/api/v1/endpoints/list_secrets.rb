@@ -3,17 +3,17 @@
 module Api
   module V1
     module Endpoints
-      class ListRecords < Apia::Endpoint
+      class ListSecrets < Apia::Endpoint
 
-        description "List all encrypted records for a given user"
-        scope "records"
+        description "List all encrypted secrets for a given user"
+        scope "secrets"
 
         argument :user_id, type: :string, required: true
-        field :records, type: :string
+        field :secrets, type: :string
 
         def call
           user_id = request.arguments[:user_id]
-          response.add_field :records, "here they're"
+          response.add_field :secrets, "here they're"
         end
 
       end

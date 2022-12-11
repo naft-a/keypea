@@ -1,11 +1,11 @@
 development:
   clients:
     default:
-      database: records-service-development
+      database: secrets-service-development
       hosts:
         - localhost:27017
       options:
-        user: 'records-service'
+        user: 'secrets-service'
         password: 'secret'
         auth_source: admin
         auth_mech: :scram

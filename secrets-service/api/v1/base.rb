@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 require_relative "../authenticator"
-require_relative "./endpoints/create_records"
-require_relative "./endpoints/list_records"
+require_relative "./endpoints/create_secrets"
+require_relative "./endpoints/list_secrets"
 
 module Api
   module V1
@@ -18,8 +18,8 @@ module Api
         schema
 
         group :records do
-          get "/records", endpoint: Endpoints::ListRecords
-          post "/records", endpoint: Endpoints::CreateRecords
+          get "/records", endpoint: Endpoints::ListSecrets
+          post "/records", endpoint: Endpoints::CreateSecrets
         end
       end
 
