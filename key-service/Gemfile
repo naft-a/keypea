@@ -11,7 +11,7 @@ gem "apia", "~> 3.0"
 gem "rack"
 gem "rack_csrf"
 gem "rack-cors"
-gem "rspec-core", require: false
+gem "rspec", require: false
 
 group :development do
   gem "pry-remote"

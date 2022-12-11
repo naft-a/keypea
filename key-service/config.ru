@@ -4,9 +4,6 @@ $LOAD_PATH.unshift(File.expand_path(__dir__))
 
 require "apia"
 require "apia/rack"
-require "omniauth"
-require "omniauth-github"
-require "rack/csrf"
 require "rack/cors"
 
 require "./app"
@@ -18,7 +15,7 @@ require "pry-remote" if ENV["RACK_ENV"] == "development"
 use Rack::Session::Cookie, key:'rack.session', expire_after: 2592000, secret: 'TODO:'
 use Rack::Cors do
   allow do
-    origins '*'
+    origins 'localhost:3000', '127.0.0.1:50'
     resource '*',
              methods: [:get, :post, :delete, :put, :patch, :options, :head],
              headers: :any

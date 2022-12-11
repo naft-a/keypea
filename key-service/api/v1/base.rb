@@ -1,7 +1,8 @@
 # frozen_string_literal: true
 
-require "api/authenticator"
-Dir["api/v1/endpoints/*.rb"].each { |file| require file }
+require_relative "../authenticator"
+require_relative "./endpoints/keys_create"
+require_relative "./endpoints/keys_list"
 
 module Api
   module V1
