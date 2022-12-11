@@ -4,6 +4,7 @@ $LOAD_PATH.unshift(File.expand_path(__dir__))
 
 require "apia"
 require "apia/rack"
+require "mongoid"
 require "rack/cors"
 
 require "./app"
@@ -41,6 +42,14 @@ use Rack::Cors do
   #            if: proc { |env| env['HTTP_HOST'] == 'api.example.com' }
   # end
 end
+
+# ===== MongoDB =====
+Mongoid.load!(File.join(File.dirname(__FILE__), 'mongoid.yml'))
+Mongoid.configure do |config|
+  config.log_level = :warn
+end
+
+binding.pry_remote
 
 # ===== Middleware =====
 use Apia::Rack, Api::V1::Base, "/core/v1", development: ENV["RACK_ENV"] == "development"

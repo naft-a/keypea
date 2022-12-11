@@ -17,7 +17,7 @@ module Api
       routes do
         schema
 
-        group :keys do
+        group :records do
           get "/records", endpoint: Endpoints::ListRecords
           post "/records", endpoint: Endpoints::CreateRecords
         end

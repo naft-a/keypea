@@ -1,0 +1,9 @@
+.idea/
+.DS_store
+
+/log/*
+/tmp/*
+!/log/.keep
+!/tmp/.keep
+
+mongoid.yml

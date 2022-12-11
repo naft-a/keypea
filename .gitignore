@@ -1,7 +1,2 @@
-.idea
+.idea/
 .DS_store
-
-/log/*
-/tmp/*
-!/log/.keep
-!/tmp/.keep
