@@ -49,8 +49,6 @@ Mongoid.configure do |config|
   config.log_level = :warn
 end
 
-binding.pry_remote
-
 # ===== Middleware =====
 use Apia::Rack, Api::V1::Base, "/core/v1", development: ENV["RACK_ENV"] == "development"
 
