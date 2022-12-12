@@ -5,7 +5,6 @@ $LOAD_PATH.unshift(File.expand_path(__dir__))
 require "apia"
 require "apia/rack"
 require "mongoid"
-require "rack/cors"
 
 require "./app"
 require "./models/part"

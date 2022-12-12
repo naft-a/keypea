@@ -10,7 +10,7 @@ end
 gem "apia", "~> 3.0"
 gem "mongoid", "~> 8.0.2"
 gem "rack"
-gem "racksh"
+gem "rack-console"
 gem "rspec", require: false
 
 group :development do
