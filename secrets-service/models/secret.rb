@@ -7,9 +7,11 @@ class Secret
   field :user_id, type: String
   field :name, type: String
   field :description, type: String
-  field :encryption_key_encrypted, type: String
 
   attr_accessor :password
 
+  has_one :encryption_key
   has_many :parts
+
+  validates :encryption_key, presence: true
 end

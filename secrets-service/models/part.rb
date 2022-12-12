@@ -8,6 +8,17 @@ class Part
 
   belongs_to :secret
 
+  delegate :password, to: :secret
+  delegate :encryption_key, to: :secret
+
+  before_save do
+    binding.pry_remote
+
+    # decrypt_encryption_key
+    # encrypt_key
+    # encrypt_value
+  end
+
   def decrypt
   end
 
