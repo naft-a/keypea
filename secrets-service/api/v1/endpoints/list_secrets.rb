@@ -15,20 +15,8 @@ module Api
         end
 
         def call
-          user_id = request.arguments[:user_id]
-          secret = OpenStruct.new(
-            id: "asdasd",
-            user_id: user_id,
-            name: "naaame",
-            description: "fdjglksdfg",
-            encryption_key_encrypted: "xaopjfrkmf",
-            parts: [OpenStruct.new(key: "a", value: "xaaxxa"), OpenStruct.new(key: "b", value: "bahaha")],
-            created_at: Time.now.utc,
-            updated_at: Time.now.utc
-          )
-          array = [secret]
-
-          response.add_field :secrets, array
+          secrets = Secret.where(user_id: request.arguments[:user_id])
+          response.add_field :secrets, secrets.to_a
         end
 
       end
