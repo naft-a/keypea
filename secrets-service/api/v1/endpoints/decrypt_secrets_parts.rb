@@ -8,17 +8,18 @@ module Api
         description "Decrypt parts data from a secret"
         scope "secrets"
 
-        argument :secret_id, type: :string, required: true
+        argument :secret, type: ArgumentSets::SecretLookup, required: true
         argument :password, type: :string, required: true
 
         field :parts, type: [Objects::Part]
 
         def call
-          secret_id = request.arguments[:secret_id]
-          password = request.arguments[:password]
+          secret = request.arguments[:secret_id].resolve
 
-          parts = [OpenStruct.new(key: password, value: secret_id), OpenStruct.new(key: password, value: secret_id)]
-          response.add_field :parts, parts
+          secret.password = request.arguments[:password]
+          decrypted_parts = secret.parts.map(&:decrypt)
+
+          response.add_field :parts, decrypted_parts
         end
 
       end

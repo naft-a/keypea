@@ -9,5 +9,7 @@ class Secret
   field :description, type: String
   field :encryption_key_encrypted, type: String
 
+  attr_accessor :password
+
   has_many :parts
 end

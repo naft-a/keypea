@@ -7,4 +7,10 @@ class Part
   field :value, type: String
 
   belongs_to :secret
+
+  def decrypt
+  end
+
+  def encrypt
+  end
 end

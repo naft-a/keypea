@@ -5,6 +5,7 @@ require_relative "./objects/part"
 require_relative "./objects/secret"
 require_relative "./argument_sets/part_arguments"
 require_relative "./argument_sets/secret_arguments"
+require_relative "./argument_sets/secret_lookup"
 require_relative "./endpoints/create_secrets"
 require_relative "./endpoints/list_secrets"
 require_relative "./endpoints/update_secrets"
@@ -27,11 +28,11 @@ module Api
         group :secrets do
           get "/secrets", endpoint: Endpoints::ListSecrets
           post "/secrets", endpoint: Endpoints::CreateSecrets
-          patch "/secrets/:secret_id", endpoint: Endpoints::UpdateSecrets
-          delete "/secrets/:secret_id", endpoint: Endpoints::DeleteSecrets
+          patch "/secrets/:secret", endpoint: Endpoints::UpdateSecrets
+          delete "/secrets/:secret", endpoint: Endpoints::DeleteSecrets
 
           group :parts do
-            post "/secrets/:secret_id/parts/decrypt", endpoint: Endpoints::DecryptSecretsParts
+            post "/secrets/:secret/parts/decrypt", endpoint: Endpoints::DecryptSecretsParts
           end
         end
       end

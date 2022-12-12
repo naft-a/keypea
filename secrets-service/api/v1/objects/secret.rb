@@ -5,7 +5,7 @@ module Api
     module Objects
       class Secret < Apia::Object
 
-        description "Represents a secret record with parts"
+        description "Represents a secret record"
 
         field :id, type: :string, backend: proc { |o| o.id.to_s }
         field :user_id, type: :string
