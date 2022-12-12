@@ -22,37 +22,16 @@ AppLogger.instance_eval do
     self.send(:<<, msg)
   end
 end
-
 use Rack::CommonLogger, AppLogger
-use Rack::Session::Cookie, key:'rack.session', expire_after: 2592000, secret: 'TODO:'
-use Rack::Cors do
-  allow do
-    origins 'localhost:3000', '127.0.0.1:50'
-    resource '*',
-             methods: [:get, :post, :delete, :put, :patch, :options, :head],
-             headers: :any
-  end
-
-  # allow do
-  #   origins '*'
-  #   resource '/public/*', headers: :any, methods: :get
-  #
-  #   # Only allow a request for a specific host
-  #   resource '/core/v1/*',
-  #            headers: :any,
-  #            methods: :get,
-  #            if: proc { |env| env['HTTP_HOST'] == 'api.example.com' }
-  # end
-end
 
 # ===== MongoDB =====
 Mongoid.load!(File.join(File.dirname(__FILE__), 'mongoid.yml'))
+Mongoid.raise_not_found_error = false
+
 Mongoid.logger = Logger.new(STDERR).tap do |log|
-  log.level = Logger::DEBUG
+  log.level = Logger::DEBUG if ENV["RACK_ENV"] == "development"
 end
 Mongo::Logger.logger = Mongoid.logger
-
-Mongoid.raise_not_found_error = false
 
 # ===== Middleware =====
 use Apia::Rack, Api::V1::Base, "/core/v1", development: ENV["RACK_ENV"] == "development"
