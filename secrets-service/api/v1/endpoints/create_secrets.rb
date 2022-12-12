@@ -9,12 +9,24 @@ module Api
         scope "secrets"
 
         argument :user_id, type: :string, required: true
-        argument :keypair, type: :string, required: true
-        field :keypair, type: :string
+        argument :parts, type: [:string], required: true
+        field :secret, type: Objects::Secret, include: true do
+          "The secret that was just created"
+        end
 
         def call
-          keypair = request.arguments[:keypair]
-          response.add_field :keypair, keypair
+          user_id = request.arguments[:user_id]
+          secret = OpenStruct.new(
+            id: "asdasd",
+            user_id: user_id,
+            name: "naaame",
+            encryption_key_encrypted: "xaopjfrkmf",
+            parts: [OpenStruct.new(key: "a", value: "xaaxxa"), OpenStruct.new(key: "b", value: "bahaha")],
+            created_at: Time.now.utc,
+            updated_at: Time.now.utc
+          )
+
+          response.add_field :secret, secret
         end
 
       end
