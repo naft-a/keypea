@@ -9,6 +9,9 @@ module Api
         scope "secrets"
 
         argument :secret_id, type: :string, required: true
+        argument :properties, ArgumentSets::Secret, required: true do
+          description "Details for the secret"
+        end
 
         field :secret, type: Objects::Secret
 
@@ -19,6 +22,7 @@ module Api
             id: secret_id,
             user_id: "asdasd [UPDATED]",
             name: "AAAAAA",
+            description: "fdjglksdfg",
             encryption_key_encrypted: "xaopjfrkmf",
             parts: [OpenStruct.new(key: "a", value: "xaaxxa"), OpenStruct.new(key: "b", value: "bahaha")],
             created_at: Time.now.utc,

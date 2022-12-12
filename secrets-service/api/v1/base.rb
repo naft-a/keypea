@@ -3,6 +3,7 @@
 require_relative "../authenticator"
 require_relative "./objects/part"
 require_relative "./objects/secret"
+require_relative './argument_sets/secret_arguments'
 require_relative "./endpoints/create_secrets"
 require_relative "./endpoints/list_secrets"
 require_relative './endpoints/update_secrets'
@@ -16,7 +17,7 @@ module Api
       authenticator Authenticator
 
       scopes do
-        add "records", "Allows keys management"
+        add "secrets", "Allows secrets management"
       end
 
       routes do

@@ -19,6 +19,7 @@ module Api
             id: secret_id,
             user_id: "asdasd",
             name: "naaame [DELETED]",
+            description: "fdjglksdfg",
             encryption_key_encrypted: "xaopjfrkmf",
             parts: [OpenStruct.new(key: "a", value: "xaaxxa"), OpenStruct.new(key: "b", value: "bahaha")],
             created_at: Time.now.utc,

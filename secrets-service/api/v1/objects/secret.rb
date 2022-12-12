@@ -10,6 +10,7 @@ module Api
         field :id, type: :string
         field :user_id, type: :string
         field :name, type: :string
+        field :description, type: :string
         field :encryption_key_encrypted, type: :string
         field :parts, type: [Objects::Part]
         field :created_at, type: :unix_time, null: true
