@@ -10,7 +10,7 @@ require_relative "../api/v1/endpoints/list_secrets"
 require_relative "../api/v1/endpoints/create_secrets"
 require_relative "../api/v1/endpoints/update_secrets"
 require_relative "../api/v1/endpoints/delete_secrets"
-require_relative "../api/v1/endpoints/decrypt_secrets"
+require_relative "../api/v1/endpoints/decrypt_secrets_parts"
 
 RSpec.configure do |config|
   # rack_app = Module.new do

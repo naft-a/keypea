@@ -3,6 +3,7 @@
 class Part
   include Mongoid::Document
 
+  field :id, type: String
   field :key, type: String
   field :value, type: String
 

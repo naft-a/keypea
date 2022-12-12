@@ -7,6 +7,7 @@ module Api
 
         argument :name, type: :string
         argument :description, type: :string
+        argument :parts, type: [ArgumentSets::Part]
 
       end
     end

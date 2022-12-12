@@ -7,6 +7,7 @@ module Api
 
         description "Represents a secret record with parts"
 
+        field :id, type: :string, backend: proc { |o| o.id.to_s }
         field :key, type: :string
         field :value, type: :string
 

@@ -3,7 +3,7 @@
 module Api
   module V1
     module Endpoints
-      class DecryptSecrets < Apia::Endpoint
+      class DecryptSecretsParts < Apia::Endpoint
 
         description "Decrypt parts data from a secret"
         scope "secrets"
