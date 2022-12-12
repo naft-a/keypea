@@ -13,18 +13,8 @@ module Api
         field :secret, type: Objects::Secret
 
         def call
-          secret_id = request.arguments[:secret_id]
-
-          secret = OpenStruct.new(
-            id: secret_id,
-            user_id: "asdasd",
-            name: "naaame [DELETED]",
-            description: "fdjglksdfg",
-            encryption_key_encrypted: "xaopjfrkmf",
-            parts: [OpenStruct.new(key: "a", value: "xaaxxa"), OpenStruct.new(key: "b", value: "bahaha")],
-            created_at: Time.now.utc,
-            updated_at: Time.now.utc
-          )
+          secret = Secret.find(request.arguments[:secret_id])
+          secret.destroy! if secret.present?
 
           response.add_field :secret, secret
         end

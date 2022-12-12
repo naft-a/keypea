@@ -9,25 +9,25 @@ module Api
         scope "secrets"
 
         argument :secret_id, type: :string, required: true
-        argument :properties, ArgumentSets::Secret, required: true do
+        argument :properties, ArgumentSets::Secret do
           description "Details for the secret"
         end
 
         field :secret, type: Objects::Secret
 
-        def call
-          secret_id = request.arguments[:secret_id]
+        potential_error "SecretNotFound" do
+          code :secret_not_found
+          description "No secret was found matching any of the criteria provided in the arguments"
+          http_status 404
+        end
 
-          secret = OpenStruct.new(
-            id: secret_id,
-            user_id: "asdasd [UPDATED]",
-            name: "AAAAAA",
-            description: "fdjglksdfg",
-            encryption_key_encrypted: "xaopjfrkmf",
-            parts: [OpenStruct.new(key: "a", value: "xaaxxa"), OpenStruct.new(key: "b", value: "bahaha")],
-            created_at: Time.now.utc,
-            updated_at: Time.now.utc
-          )
+        def call
+          secret = Secret.find(request.arguments[:secret_id])
+          raise_error "SecretNotFound" if secret.blank?
+
+          properties = request.arguments[:properties]
+          properties = properties&.to_hash&.except(:parts) || {}
+          secret&.update!(**properties)
 
           response.add_field :secret, secret
         end

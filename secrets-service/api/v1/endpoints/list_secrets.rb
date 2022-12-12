@@ -10,9 +10,7 @@ module Api
 
         argument :user_id, type: :string, required: true
 
-        field :secrets, type: [Objects::Secret] do
-          description "All secrets of this user"
-        end
+        field :secrets, type: [Objects::Secret]
 
         def call
           secrets = Secret.where(user_id: request.arguments[:user_id])

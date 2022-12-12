@@ -52,6 +52,8 @@ Mongoid.logger = Logger.new(STDERR).tap do |log|
 end
 Mongo::Logger.logger = Mongoid.logger
 
+Mongoid.raise_not_found_error = false
+
 # ===== Middleware =====
 use Apia::Rack, Api::V1::Base, "/core/v1", development: ENV["RACK_ENV"] == "development"
 

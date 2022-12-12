@@ -11,9 +11,7 @@ module Api
         argument :user_id, type: :string, required: true
         argument :properties, ArgumentSets::Secret, required: true
 
-        field :secret, type: Objects::Secret, include: true do
-          "The secret that was just created"
-        end
+        field :secret, type: Objects::Secret, include: true
 
         def call
           secret = Secret.create!(
@@ -21,7 +19,7 @@ module Api
             name: request.arguments[:properties][:name],
             description: request.arguments[:properties][:description],
             encryption_key_encrypted: "test-key",
-            parts: request.arguments[:properties][:parts].map { |part_attrs| Part.new(**part_attrs) }
+            parts: request.arguments[:properties][:parts]&.map { |part_attrs| Part.new(**part_attrs) } || []
           )
 
           response.add_field :secret, secret
