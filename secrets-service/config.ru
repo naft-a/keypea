@@ -8,6 +8,8 @@ require "mongoid"
 require "rack/cors"
 
 require "./app"
+require "./models/part"
+require "./models/secret"
 require "api/v1/base"
 
 require "pry-remote" if ENV["RACK_ENV"] == "development"
