@@ -12,8 +12,16 @@ module Api
 
         field :secret, type: Objects::Secret
 
+        potential_error "SecretNotFound" do
+          code :secret_not_found
+          description "No secret was found matching any of the criteria provided in the arguments"
+          http_status 404
+        end
+
         def call
           secret = Secret.find(request.arguments[:secret_id])
+          raise_error "SecretNotFound" if secret.blank?
+
           secret.destroy! if secret.present?
 
           response.add_field :secret, secret
