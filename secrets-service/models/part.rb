@@ -12,16 +12,19 @@ class Part
   delegate :encryption_key, to: :secret
 
   before_save do
-    binding.pry_remote
+    decipher = OpenSSL::Cipher::AES.new(256, :CBC)
+    decipher.decrypt
+    decipher.key = Digest::MD5.hexdigest(password)
+    secret_key = decipher.update(Base64.urlsafe_decode64(encryption_key.value_encrypted)) + decipher.final
 
-    # decrypt_encryption_key
-    # encrypt_key
-    # encrypt_value
-  end
+    cipher = OpenSSL::Cipher::AES.new(256, :CBC)
+    cipher.encrypt
+    cipher.key = secret_key
 
-  def decrypt
-  end
+    encrypted_key = cipher.update(key.to_s) + cipher.final
+    self.key = Base64.urlsafe_encode64(encrypted_key, padding: false)
 
-  def encrypt
+    encrypted_value = cipher.update(value.to_s) + cipher.final
+    self.value = Base64.urlsafe_encode64(encrypted_value, padding: false)
   end
 end

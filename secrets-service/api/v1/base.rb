@@ -3,6 +3,7 @@
 require_relative "../authenticator"
 require_relative "./objects/part"
 require_relative "./objects/secret"
+require_relative "./errors/encryption_error"
 require_relative "./argument_sets/part_arguments"
 require_relative "./argument_sets/secret_arguments"
 require_relative "./argument_sets/secret_lookup"
@@ -11,6 +12,7 @@ require_relative "./endpoints/list_secrets"
 require_relative "./endpoints/update_secrets"
 require_relative "./endpoints/delete_secrets"
 require_relative "./endpoints/decrypt_secrets_parts"
+require_relative "./endpoints/create_encryption_keys"
 
 module Api
   module V1
@@ -34,6 +36,10 @@ module Api
           group :parts do
             post "/secrets/:secret/parts/decrypt", endpoint: Endpoints::DecryptSecretsParts
           end
+        end
+
+        group :encryption_keys do
+          post "/encryption_keys", endpoint: Endpoints::CreateEncryptionKeys
         end
       end
 

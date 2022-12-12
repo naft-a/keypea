@@ -14,12 +14,24 @@ module Api
 
         field :secret, type: Objects::Secret, include: true
 
+        potential_error "EncryptionKeyNotFound" do
+          code :encryption_key_not_found
+          description "Encryption Key for user_id is not found"
+          http_status 422
+        end
+
+        potential_error Errors::EncryptionError
+
         def call
+          encryption_key = EncryptionKey.find_by(user_id: request.arguments[:user_id])
+          raise_error "EncryptionKeyNotFound" if encryption_key.blank?
+
           secret = Secret.new(
             user_id: request.arguments[:user_id],
             name: request.arguments[:properties][:name],
             description: request.arguments[:properties][:description],
             password: request.arguments[:password],
+            encryption_key: encryption_key,
             parts: request.arguments[:properties][:parts]&.map { |part_attrs| Part.new(**part_attrs) } || []
           )
 
