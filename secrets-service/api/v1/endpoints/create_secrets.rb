@@ -23,7 +23,7 @@ module Api
         potential_error Errors::EncryptionError
 
         def call
-          encryption_key = EncryptionKey.find_by(user_id: request.arguments[:user_id])
+          encryption_key = EncryptionKey.where(user_id: request.arguments[:user_id]).first
           raise_error "EncryptionKeyNotFound" if encryption_key.blank?
 
           secret = Secret.new(
