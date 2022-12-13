@@ -29,11 +29,12 @@ module Api
           encryption_key = EncryptionKey.where(user_id: request.arguments[:user_id]).first
           raise_error "EncryptionKeyNotFound" if encryption_key.blank?
 
+          Password.set(request.arguments[:password])
+
           secret = Secret.new(
             user_id: request.arguments[:user_id],
             name: request.arguments[:properties][:name],
             description: request.arguments[:properties][:description],
-            password: request.arguments[:password],
             encryption_key: encryption_key,
             parts: request.arguments[:properties][:parts]&.map { |part_attrs| Part.new(**part_attrs) } || []
           )

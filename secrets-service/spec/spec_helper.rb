@@ -7,9 +7,12 @@ require "openssl"
 require "mongoid"
 require "pry-remote"
 
+require_relative "../lib/crypto"
+
 require_relative "../models/part"
 require_relative "../models/secret"
 require_relative "../models/encryption_key"
+require_relative "../models/password"
 
 require_relative "../api/v1/base"
 require_relative "../api/v1/endpoints/list_secrets"

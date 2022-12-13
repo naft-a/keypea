@@ -11,7 +11,7 @@ class Secret
   attr_accessor :password
 
   belongs_to :encryption_key
-  has_many :parts
+  has_many :parts, dependent: :destroy
 
   with_options(presence: true) do
     validates :user_id, :name

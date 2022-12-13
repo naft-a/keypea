@@ -23,20 +23,11 @@ module Api
         def call
           raise_error Errors::PasswordBlankError if request.arguments[:password].blank?
 
-          random_key = SecureRandom.hex(16)
-          secret_key = request.arguments[:password]
-          cipher = OpenSSL::Cipher::AES.new(256, :CBC)
-          cipher.encrypt
-          cipher.key = Digest::MD5.hexdigest(secret_key)
-          encrypted_data = cipher.update(random_key.to_s) + cipher.final
-          encrypted_data = Base64.urlsafe_encode64(encrypted_data, padding: false)
+          Password.set(request.arguments[:password])
 
-          EncryptionKey.create!(
-            user_id: request.arguments[:user_id],
-            value_encrypted: encrypted_data
-          )
+          key = EncryptionKey.create!(user_id: request.arguments[:user_id])
 
-          response.add_field :encryption_key_encrypted, encrypted_data
+          response.add_field :encryption_key_encrypted, key.value_encrypted
         rescue Mongo::Error::OperationFailure
           raise_error "EncryptionKeyNotCreated"
         end

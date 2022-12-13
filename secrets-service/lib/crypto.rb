@@ -3,7 +3,7 @@
 module Crypto
 
   class << self
-    def encrypt(data, secret)
+    def encrypt(data:, secret:)
       cipher = OpenSSL::Cipher::AES.new(256, :CBC)
       cipher.encrypt
       cipher.key = secret
@@ -11,7 +11,7 @@ module Crypto
       Base64.urlsafe_encode64(encrypted, padding: false)
     end
 
-    def decrypt(encrypted_data, secret)
+    def decrypt(encrypted_data:, secret:)
       decipher = OpenSSL::Cipher::AES.new(256, :CBC)
       decipher.decrypt
       decipher.key = secret

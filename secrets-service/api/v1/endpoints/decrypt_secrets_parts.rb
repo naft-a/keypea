@@ -15,28 +15,10 @@ module Api
 
         def call
           secret = request.arguments[:secret].resolve
-          secret.password = request.arguments[:password]
 
-          decrypted_parts = secret.parts.map do |part|
-            decipher = OpenSSL::Cipher::AES.new(256, :CBC)
-            decipher.decrypt
-            decipher.key = Digest::MD5.hexdigest(part.password)
-            secret_key = decipher.update(Base64.urlsafe_decode64(part.encryption_key.value_encrypted)) + decipher.final
+          Password.set(request.arguments[:password])
 
-            decipher = OpenSSL::Cipher::AES.new(256, :CBC)
-            decipher.decrypt
-            decipher.key = secret_key
-            key = decipher.update(Base64.urlsafe_decode64(part.key)) + decipher.final
-
-            decipher = OpenSSL::Cipher::AES.new(256, :CBC)
-            decipher.decrypt
-            decipher.key = secret_key
-            value = decipher.update(Base64.urlsafe_decode64(part.value)) + decipher.final
-
-            part.key = key
-            part.value = value
-            part
-          end
+          decrypted_parts = secret.parts.map(&:decrypt)
 
           response.add_field :parts, decrypted_parts
         end
