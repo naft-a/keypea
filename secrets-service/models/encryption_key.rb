@@ -19,6 +19,8 @@ class EncryptionKey
     self.value_encrypted = encrypt_encryption_key
   end
 
+  private
+
   def encrypt_encryption_key
     Crypto.encrypt(
       data: SecureRandom.hex(16),
