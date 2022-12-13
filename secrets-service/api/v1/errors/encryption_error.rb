@@ -5,9 +5,12 @@ module Api
     module Errors
       class EncryptionError < Apia::Error
 
+        name "Encryption error"
+        description "An encryption error occurred with the object being created"
+
         code :encryption_error
         http_status 422
-        description "An encryption error occurred with the object being created"
+
         field :class_name, type: :string
         field :message, type: :string
 

@@ -13,5 +13,7 @@ class Secret
   belongs_to :encryption_key
   has_many :parts
 
-  validates :encryption_key, presence: true
+  with_options(presence: true) do
+    validates :user_id, :name
+  end
 end

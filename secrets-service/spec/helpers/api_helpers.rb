@@ -5,14 +5,12 @@ module APIHelpers
   # Makes api call to the CreateSecretEndpoint and returns
   # a response with a new secret
   #
-  # @param payload [Hash]
+  # @yield json_body [Hash]
   # @return Apia::Response
-  def make_api_call_create_secret(payload)
+  def make_api_call
     Base.test_endpoint(described_class) do |req|
       req.headers["Authorization"] = "Bearer example"
-      req.json_body[:user_id] = payload[:user_id]
-      req.json_body[:password] = payload[:password]
-      req.json_body[:properties] = payload[:properties]
+      yield req.json_body
     end
   end
 

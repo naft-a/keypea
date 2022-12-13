@@ -18,7 +18,11 @@ module Api
           http_status 422
         end
 
+        potential_error Errors::ValidationError
+
         def call
+          raise_error Errors::PasswordBlankError if request.arguments[:password].blank?
+
           random_key = SecureRandom.hex(16)
           secret_key = request.arguments[:password]
           cipher = OpenSSL::Cipher::AES.new(256, :CBC)

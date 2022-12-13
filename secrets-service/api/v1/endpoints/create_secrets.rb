@@ -21,8 +21,11 @@ module Api
         end
 
         potential_error Errors::EncryptionError
+        potential_error Errors::ValidationError
 
         def call
+          raise_error Errors::PasswordBlankError if request.arguments[:password].blank?
+
           encryption_key = EncryptionKey.where(user_id: request.arguments[:user_id]).first
           raise_error "EncryptionKeyNotFound" if encryption_key.blank?
 

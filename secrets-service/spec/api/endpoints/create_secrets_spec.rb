@@ -34,20 +34,33 @@ describe Endpoints::CreateSecrets, type: :api_endpoint do
     end
 
     it "receives a 200 response" do
-      response = make_api_call_create_secret(secret)
+      response = make_api_call do |json_body|
+        json_body[:user_id] = secret[:user_id]
+        json_body[:password] = secret[:password]
+        json_body[:properties] = secret[:properties]
+      end
 
       expect(response.status).to eq 200
     end
 
     it "creates a new secret" do
-      response = make_api_call_create_secret(secret)
+      response = make_api_call do |json_body|
+        json_body[:user_id] = secret[:user_id]
+        json_body[:password] = secret[:password]
+        json_body[:properties] = secret[:properties]
+      end
 
       expect(response.body).to include :secret
       expect(response.body[:secret]).to include :id
     end
 
     it "encrypts parts" do
-      response = make_api_call_create_secret(secret)
+      response = make_api_call do |json_body|
+        json_body[:user_id] = secret[:user_id]
+        json_body[:password] = secret[:password]
+        json_body[:properties] = secret[:properties]
+      end
+
       key = response.body[:secret][:parts].first[:key]
       value = response.body[:secret][:parts].first[:value]
 
@@ -58,7 +71,21 @@ describe Endpoints::CreateSecrets, type: :api_endpoint do
 
   describe "failure" do
     it "raises exception when encryption key for user is missing" do
-      response = make_api_call_create_secret({user_id: "what", password: "what", properties: {}})
+      response = make_api_call do |json_body|
+        json_body[:user_id] = "what" # nonexistent user (one without an encryption key)
+        json_body[:password] = "what"
+        json_body[:properties] = {}
+      end
+
+      expect(response.status).to eq 422
+    end
+
+    it "raises exception when password key for user is missing" do
+      response = make_api_call do |json_body|
+        json_body[:user_id] = secret[:user_id]
+        json_body[:password] = ""
+        json_body[:properties] = {}
+      end
 
       expect(response.status).to eq 422
     end

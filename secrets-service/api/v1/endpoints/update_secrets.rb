@@ -15,6 +15,8 @@ module Api
 
         field :secret, type: Objects::Secret
 
+        potential_error Errors::ValidationError
+
         def call
           secret = request.arguments[:secret].resolve
 

@@ -5,7 +5,7 @@ require "spec_helper"
 include Api::V1
 
 describe Endpoints::UpdateSecrets, type: :api_endpoint do
-  let!(:secret) { create_secret_with_key_factory }
+  let!(:secret) { Factory::Create.secret_with_key }
   let(:payload) do
     {
       properties: {
@@ -17,12 +17,11 @@ describe Endpoints::UpdateSecrets, type: :api_endpoint do
 
   describe "success" do
     it "receives a 200 response and updates props" do
-      response = Base.test_endpoint(described_class) do |req|
-        req.headers["Authorization"] = "Bearer example"
-        req.json_body[:secret] = {
+      response = make_api_call do |json_body|
+        json_body[:secret] = {
           id: secret.id.to_s
         }
-        req.json_body[:properties] = payload[:properties]
+        json_body[:properties] = payload[:properties]
       end
 
       expect(response.status).to eq 200
@@ -33,28 +32,26 @@ describe Endpoints::UpdateSecrets, type: :api_endpoint do
 
   describe "failure" do
     it "responds with 404 if secret doesn't exist" do
-      response = Base.test_endpoint(described_class) do |req|
-        req.headers["Authorization"] = "Bearer example"
-        req.json_body[:secret] = {
+      response = make_api_call do |json_body|
+        json_body[:secret] = {
           id: "doesntexist"
         }
-        req.json_body[:properties] = payload[:properties]
+        json_body[:properties] = payload[:properties]
       end
 
       expect(response.status).to eq 404
     end
 
-    # it "responds with 422 if secret name is blank" do
-    #   response = Base.test_endpoint(described_class) do |req|
-    #     req.headers["Authorization"] = "Bearer example"
-    #     req.json_body[:secret] = {
-    #       id: secret.id.to_s
-    #     }
-    #     req.json_body[:properties] = {name: "", description: "here"}
-    #   end
-    #
-    #   expect(response.status).to eq 422
-    # end
+    it "returns an error if name is blank" do
+      response = make_api_call do |json_body|
+        json_body[:secret] = {
+          id: secret.id.to_s
+        }
+        json_body[:properties] = {name: "", description: "here"}
+      end
+
+      expect(response.status).to eq 422
+    end
   end
 
 end

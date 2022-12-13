@@ -21,34 +21,48 @@ describe Endpoints::CreateEncryptionKeys, type: :api_endpoint do
 
   describe "success" do
     it "receives a 200 response" do
-      response = Base.test_endpoint(described_class) do |req|
-        req.headers["Authorization"] = "Bearer example"
-        req.json_body[:user_id] = first_user[:user_id]
-        req.json_body[:password] = first_user[:password]
+      response = make_api_call do |json_body|
+        json_body[:user_id] = first_user[:user_id]
+        json_body[:password] = first_user[:password]
       end
 
       expect(response.status).to eq 200
     end
 
     it "creates a new encryption key" do
-      response = Base.test_endpoint(described_class) do |req|
-        req.headers["Authorization"] = "Bearer example"
-        req.json_body[:user_id] = second_user[:user_id]
-        req.json_body[:password] = second_user[:password]
+      response = make_api_call do |json_body|
+        json_body[:user_id] = second_user[:user_id]
+        json_body[:password] = second_user[:password]
       end
 
       expect(response.status).to eq 200
       expect(response.body).to include :encryption_key_encrypted
     end
-
   end
 
   describe "failure" do
-    it "doesn't create duplicate encryption keys" do
-      response = Base.test_endpoint(described_class) do |req|
-        req.headers["Authorization"] = "Bearer example"
-        req.json_body[:user_id] = second_user[:user_id]
-        req.json_body[:password] = second_user[:password]
+    it "returns an exception when there are duplicate encryption keys" do
+      response = make_api_call do |json_body|
+        json_body[:user_id] = second_user[:user_id]
+        json_body[:password] = second_user[:password]
+      end
+
+      expect(response.status).to eq 422
+    end
+
+    it "returns an exception if user_id is missing" do
+      response = make_api_call do |json_body|
+        json_body[:user_id] = ""
+        json_body[:password] = second_user[:password]
+      end
+
+      expect(response.status).to eq 422
+    end
+
+    it "returns an exception when password is missing" do
+      response = make_api_call do |json_body|
+        json_body[:user_id] = "random"
+        json_body[:password] = ""
       end
 
       expect(response.status).to eq 422
