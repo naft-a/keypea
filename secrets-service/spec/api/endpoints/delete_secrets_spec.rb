@@ -4,33 +4,28 @@ require "spec_helper"
 
 include Api::V1
 
-describe Endpoints::DeleteSecrets do
-  let(:secret_id) do
-    user_id = "test-#{rand(100)}"
-
-    Base.test_endpoint(Endpoints::CreateEncryptionKeys) do |req|
-      req.headers["Authorization"] = "Bearer example"
-      req.json_body[:user_id] = user_id
-      req.json_body[:password] = "test"
-    end
-
-    response = Base.test_endpoint(Endpoints::CreateSecrets) do |req|
-      req.headers["Authorization"] = "Bearer example"
-      req.json_body[:user_id] = user_id
-      req.json_body[:password] = "test"
-      req.json_body[:properties] = {name: "new", description: "desc"}
-    end
-
-    response.body[:secret][:id]
-  end
+describe Endpoints::DeleteSecrets, type: :api_endpoint do
+  let!(:secret) { create_secret_with_key_factory }
 
   describe "success" do
-    it "receives a 200 response" do
-      # response = Base.test_endpoint(described_class) do |req|
-      #   req.headers["Authorization"] = "Bearer example"
-      # end
-      #
-      # expect(response.status).to eq 200
+    it "responds with 200" do
+      response = Base.test_endpoint(described_class) do |req|
+        req.headers["Authorization"] = "Bearer example"
+        req.json_body[:secret] = {id: secret.id.to_s}
+      end
+
+      expect(response.status).to eq 200
+    end
+  end
+
+  describe "failure" do
+    it "responds with 404 if secret doesn't exist" do
+      response = Base.test_endpoint(described_class) do |req|
+        req.headers["Authorization"] = "Bearer example"
+        req.json_body[:secret] = {id: "blank"}
+      end
+
+      expect(response.status).to eq 404
     end
   end
 end

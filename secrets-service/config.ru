@@ -7,6 +7,7 @@ require "apia/rack"
 require "mongoid"
 
 require "./app"
+require "./lib/crypto"
 require "./models/encryption_key"
 require "./models/part"
 require "./models/secret"
