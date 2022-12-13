@@ -31,17 +31,13 @@ module Api
 
           Password.set(request.arguments[:password])
 
-          secret = Secret.new(
+          secret = Secret.create!(
             user_id: request.arguments[:user_id],
             name: request.arguments[:properties][:name],
             description: request.arguments[:properties][:description],
             encryption_key: encryption_key,
             parts: request.arguments[:properties][:parts]&.map { |part_attrs| Part.new(**part_attrs) } || []
           )
-
-          secret.save!
-          secret.encryption_key.save!
-          secret.parts.map(&:save!)
 
           response.add_field :secret, secret
         end
