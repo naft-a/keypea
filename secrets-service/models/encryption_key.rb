@@ -7,7 +7,7 @@ class EncryptionKey
   field :user_id, type: String
   field :value_encrypted, type: String
 
-  belongs_to :secret, optional: true
+  has_many :secrets
 
   index({ user_id: 1 }, { unique: true, name: "encryption_key_user_id_index" })
 end

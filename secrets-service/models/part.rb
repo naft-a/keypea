@@ -20,10 +20,12 @@ class Part
     cipher = OpenSSL::Cipher::AES.new(256, :CBC)
     cipher.encrypt
     cipher.key = secret_key
-
     encrypted_key = cipher.update(key.to_s) + cipher.final
     self.key = Base64.urlsafe_encode64(encrypted_key, padding: false)
 
+    cipher = OpenSSL::Cipher::AES.new(256, :CBC)
+    cipher.encrypt
+    cipher.key = secret_key
     encrypted_value = cipher.update(value.to_s) + cipher.final
     self.value = Base64.urlsafe_encode64(encrypted_value, padding: false)
   end

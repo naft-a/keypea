@@ -10,7 +10,7 @@ class Secret
 
   attr_accessor :password
 
-  has_one :encryption_key
+  belongs_to :encryption_key
   has_many :parts
 
   validates :encryption_key, presence: true

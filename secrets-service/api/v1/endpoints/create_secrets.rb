@@ -36,6 +36,7 @@ module Api
           )
 
           secret.save!
+          secret.encryption_key.save!
           secret.parts.map(&:save!)
 
           response.add_field :secret, secret
