@@ -9,9 +9,9 @@ module Factory
       # @param user_id [String]
       # @param password [String]
       # @return [Mongoid::Document, nil]
-      def secret_with_key(user_id: nil, key: nil, password: nil)
+      def secret_with_key!(user_id: nil, key: nil, password: nil)
         user_id ||= "test-#{rand(999)}"
-        key ||= encryption_key(user_id: user_id)
+        key ||= encryption_key!(user_id: user_id)
 
         Secret.create!(
           user_id: user_id,
@@ -26,7 +26,7 @@ module Factory
       # @param user_id [String]
       # @param password [String]
       # @return [Mongoid::Document, nil]
-      def encryption_key(user_id: nil, password: nil)
+      def encryption_key!(user_id: nil, password: nil)
         user_id ||= "test-#{rand(999)}"
 
         EncryptionKey.create!(

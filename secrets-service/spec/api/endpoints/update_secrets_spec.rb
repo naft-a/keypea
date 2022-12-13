@@ -5,7 +5,7 @@ require "spec_helper"
 include Api::V1
 
 describe Endpoints::UpdateSecrets, type: :api_endpoint do
-  let!(:secret) { Factory::Create.secret_with_key }
+  let!(:secret) { Factory::Create.secret_with_key! }
   let(:payload) do
     {
       properties: {

@@ -10,10 +10,10 @@ describe Endpoints::ListSecrets, type: :api_endpoint do
 
   describe "success" do
     before(:context) do
-      encryption_key = Factory::Create.encryption_key(user_id: USER_ID)
+      encryption_key = Factory::Create.encryption_key!(user_id: USER_ID)
 
       5.times do
-        Factory::Create.secret_with_key(user_id: USER_ID, key: encryption_key)
+        Factory::Create.secret_with_key!(user_id: USER_ID, key: encryption_key)
       end
     end
 
