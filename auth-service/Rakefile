@@ -1,9 +1,5 @@
 require "mongoid"
 
-require "./models/encryption_key"
-require "./models/part"
-require "./models/secret"
-
 ENV["RACK_ENV"] = "development" # todo: remove when ready
 
 # load the rake tasks

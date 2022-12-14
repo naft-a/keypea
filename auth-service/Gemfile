@@ -7,13 +7,14 @@ git_source(:github) do |repo_name|
   "https://github.com/#{repo_name}.git"
 end
 
-gem "rack"
-gem "rack_csrf"
-gem "rack-cors"
 gem "apia", "~> 3.0"
-gem "omniauth"
-gem "omniauth-github"
+gem "mongoid", "~> 8.0.2"
+gem "rack"
+gem "rack-console"
+gem "rspec", require: false
 
-group :development do  
+group :development do
   gem "pry-remote"
+  gem "rubocop", require: false
+  gem "rubocop-rspec", require: false
 end
