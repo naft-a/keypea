@@ -13,11 +13,15 @@ module Api
 
         field :user, type: Objects::User
 
+        potential_error Errors::UsernamePasswordMismatchError
+
         def call
           user = User.authenticate!(
             username: request.arguments[:username],
             password: request.arguments[:password]
           )
+
+          raise_error Errors::UsernamePasswordMismatchError if user.blank?
 
           response.add_field :user, user
         end

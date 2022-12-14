@@ -1,4 +1,5 @@
 require "mongoid"
+require "bcrypt"
 
 require "./models/user"
 

@@ -3,6 +3,7 @@
 $LOAD_PATH.unshift(File.expand_path(__dir__))
 
 require "apia"
+require "bcrypt"
 require "apia/rack"
 require "mongoid"
 

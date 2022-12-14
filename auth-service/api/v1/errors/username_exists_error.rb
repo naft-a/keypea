@@ -8,7 +8,7 @@ module Api
         name "Username exists error"
         description "An error occurred with the input provided - username already exists"
 
-        code :validation_error
+        code :username_exists_error
         http_status 422
 
         field :details, [:string]
