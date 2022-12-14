@@ -8,8 +8,6 @@ class Secret
   field :name, type: String
   field :description, type: String
 
-  attr_accessor :password
-
   belongs_to :encryption_key
   has_many :parts, dependent: :destroy
 
