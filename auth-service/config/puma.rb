@@ -19,4 +19,4 @@ port ENV.fetch("PORT") { 3000 }
 # Workers do not work on JRuby or Windows (both of which do not support
 # processes).
 #
-workers ENV.fetch("WORKERS") { 1 }.to_i
+workers ENV.fetch("WORKERS") { 2 }.to_i
