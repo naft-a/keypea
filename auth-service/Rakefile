@@ -1,0 +1,16 @@
+require "mongoid"
+
+require "./models/encryption_key"
+require "./models/part"
+require "./models/secret"
+
+ENV["RACK_ENV"] = "development" # todo: remove when ready
+
+# load the rake tasks
+path = Gem::Specification.find_by_name("mongoid")
+Mongoid.load!(File.join(File.dirname(__FILE__), 'mongoid.yml'))
+load "#{path.gem_dir}/lib/mongoid/tasks/database.rake"
+
+# set default environment
+task :environment do
+end
