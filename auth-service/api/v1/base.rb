@@ -1,7 +1,12 @@
 # frozen_string_literal: true
 
-require "api/authenticator"
-Dir["api/v1/endpoints/*.rb"].each { |file| require file }
+require_relative "../authenticator"
+require_relative "./objects/user"
+require_relative "./errors/validation_error"
+require_relative "./argument_sets/user_lookup"
+require_relative "./endpoints/get_user"
+require_relative "./endpoints/create_users"
+require_relative "./endpoints/auth_user"
 
 module Api
   module V1
@@ -10,15 +15,19 @@ module Api
       authenticator Authenticator
 
       scopes do
-        add "github", "Allows Github OAuth integration"
+        add "users", "Allows users integration"
       end
 
       routes do
         schema
 
-        group :github do
-          get "auth/github/signin", endpoint: Endpoints::GithubSignin
-          get "auth/github/callback", endpoint: Endpoints::GithubCallback
+        group :users do
+          get "/users/:user_id", endpoint: Endpoints::GetUser
+          post "/users", endpoint: Endpoints::CreateUsers
+
+          group :auth do
+            post "/users/auth", endpoint: Endpoints::AuthUser
+          end
         end
       end
 
