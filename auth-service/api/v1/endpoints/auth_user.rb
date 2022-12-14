@@ -16,7 +16,7 @@ module Api
         potential_error Errors::UsernamePasswordMismatchError
 
         def call
-          user = User.authenticate!(
+          user = User.authenticate(
             username: request.arguments[:username],
             password: request.arguments[:password]
           )

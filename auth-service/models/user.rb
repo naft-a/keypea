@@ -38,7 +38,7 @@ class User
   # @param username [String]
   # @param password [String]
   # @return [User, nil]
-  def self.authenticate!(username:, password:)
+  def self.authenticate(username:, password:)
     @user = self.find_by(username: username)
 
     if @user&.password == password
