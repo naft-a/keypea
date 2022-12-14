@@ -19,7 +19,7 @@ module Api
             password: request.arguments[:password]
           )
 
-          response.add_field :secrets, user
+          response.add_field :user, user
         end
 
       end

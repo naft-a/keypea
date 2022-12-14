@@ -8,12 +8,14 @@ class User
   field :username, type: String
   field :password, type: String
 
+  index({ username: 1 }, { unique: true, name: "user_username_index" })
+
   with_options(presence: true) do
     validates :username, :password
   end
 
   def self.authenticate!(username:, password:)
-    raise NotImplementedError
+    self.find_by(username: username)
   end
 
 end

@@ -1,5 +1,7 @@
 require "mongoid"
 
+require "./models/user"
+
 ENV["RACK_ENV"] = "development" # todo: remove when ready
 
 # load the rake tasks

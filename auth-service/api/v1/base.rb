@@ -3,6 +3,7 @@
 require_relative "../authenticator"
 require_relative "./objects/user"
 require_relative "./errors/validation_error"
+require_relative "./errors/username_exists_error"
 require_relative "./argument_sets/user_lookup"
 require_relative "./endpoints/get_user"
 require_relative "./endpoints/create_users"

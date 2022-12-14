@@ -11,9 +11,10 @@ module Api
         argument :username, type: :string, required: true
         argument :password, type: :string, required: true
 
-        field :user, type: Objects::User
+        field :user, type: Objects::User, include: true
 
         potential_error Errors::ValidationError
+        potential_error Errors::UsernameExistsError
 
         def call
           user = User.create!(
@@ -21,7 +22,7 @@ module Api
             password: request.arguments[:password]
           )
 
-          response.add_field :secrets, user
+          response.add_field :user, user
         end
 
       end

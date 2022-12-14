@@ -7,6 +7,7 @@ require "apia/rack"
 require "mongoid"
 
 require "./app"
+require "./models/user"
 require "api/v1/base"
 
 require "pry-remote" if ENV["RACK_ENV"] == "development"

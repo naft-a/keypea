@@ -14,7 +14,7 @@ module Api
 
         def call
           user = request.arguments[:user_id].resolve
-          response.add_field :secrets, user
+          response.add_field :user, user
         end
 
       end
