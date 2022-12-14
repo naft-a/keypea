@@ -14,7 +14,7 @@ class Part
 
   # Encrypts key and value of this part
   #
-  # @return TrueClass
+  # @return [TrueClass]
   def encrypt
     secret_key = decrypted_secret_key
 
@@ -26,7 +26,7 @@ class Part
 
   # Decrypts the key and value of this part
   #
-  # @return Part
+  # @return [Part]
   def decrypt
     secret_key = decrypted_secret_key
 

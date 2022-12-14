@@ -14,10 +14,11 @@ module Api
         field :parts, type: [Objects::Part]
 
         def call
-          secret = request.arguments[:secret].resolve
+          raise_error Errors::PasswordBlankError if request.arguments[:password].blank?
 
           Password.set(request.arguments[:password])
 
+          secret = request.arguments[:secret].resolve
           decrypted_parts = secret.parts.map(&:decrypt)
 
           response.add_field :parts, decrypted_parts
