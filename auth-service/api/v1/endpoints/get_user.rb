@@ -8,12 +8,12 @@ module Api
         description "Information about a given user"
         scope "users"
 
-        argument :user_id, type: ArgumentSets::UserLookup, required: true
+        argument :user, type: ArgumentSets::UserLookup, required: true
 
         field :user, type: Objects::User
 
         def call
-          user = request.arguments[:user_id].resolve
+          user = request.arguments[:user].resolve
           response.add_field :user, user
         end
 
