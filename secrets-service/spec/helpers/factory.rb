@@ -3,13 +3,12 @@
 module Factory
 
   class EncryptionKeyFactory
-
     # Creates a secret record with a key attached to it
     #
     # @param user_id [String]
     # @param password [String]
     # @return [Mongoid::Document, nil]
-    def self.create!(user_id: nil, password: nil)
+    def self.create!(user_id: nil)
       user_id ||= "test-#{rand(999)}"
 
       EncryptionKey.create!(
@@ -17,17 +16,15 @@ module Factory
         value_encrypted: SecureRandom.hex(16)
       )
     end
-
   end
 
   class SecretFactory
-
     # Creates a secret record with a key attached to it
     #
     # @param user_id [String]
     # @param password [String]
     # @return [Mongoid::Document, nil]
-    def self.create_with_key!(user_id: nil, key: nil, password: nil)
+    def self.create_with_key!(user_id: nil, key: nil)
       user_id ||= "test-#{rand(999)}"
       key ||= EncryptionKeyFactory.create!(user_id: user_id)
 
@@ -38,6 +35,6 @@ module Factory
         encryption_key: key
       )
     end
-
   end
+
 end
