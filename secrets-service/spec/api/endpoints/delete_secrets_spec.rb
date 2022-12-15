@@ -5,7 +5,7 @@ require "spec_helper"
 include Api::V1
 
 describe Endpoints::DeleteSecrets, type: :api_endpoint do
-  let!(:secret) { Factory::Create.secret_with_key! }
+  let!(:secret) { Factory::SecretFactory.create_with_key! }
 
   describe "success" do
     it "responds with 200" do
