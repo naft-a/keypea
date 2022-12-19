@@ -2,15 +2,23 @@
 
 source "https://rubygems.org"
 
+git_source(:github) do |repo_name|
+  repo_name = "#{repo_name}/#{repo_name}" unless repo_name.include?("/")
+  "https://github.com/#{repo_name}.git"
+end
+
 gem "hanami", "~> 2.0"
 gem "hanami-router", "~> 2.0"
 gem "hanami-controller", "~> 2.0"
 gem "hanami-validations", "~> 2.0"
 
+gem "activesupport", '~> 7.0', '>= 7.0.4'
+gem "apia-client", github: "naft-a/apia-ruby-client"
 gem "dry-types", "~> 1.0", ">= 1.6.1"
+gem "pry-remote"
+gem "jwt"
 gem "puma"
 gem "rake"
-gem "jwt"
 
 group :development, :test do
   gem "dotenv"

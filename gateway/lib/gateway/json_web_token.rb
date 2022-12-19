@@ -3,21 +3,26 @@
 require "jwt"
 
 module Gateway
-  module JsonWebToken
+  module JSONWebToken
 
-    SECRET_KEY = settings.hmac_secret
+    SECRET_KEY = Hanami.app["settings"].hmac_secret
 
     class << self
 
       # Encode given payload
       #
       # @param payload [Hash]
-      # @param expires_in []
+      # @param expires_in [Time]
+      # @return token [String]
       def encode(payload, expires_in: 24.hours.from_now)
-        payload[:exp] = exp.to_i
+        payload[:exp] = expires_in.to_i
         JWT.encode(payload, SECRET_KEY, "HS256")
       end
 
+      # Decode a jwt token
+      #
+      # @param token [String]
+      # @return [Hash, FalseClass]
       def decode(token)
         decoded = JWT.decode(token, SECRET_KEY, true, {algorithm: "HS256"})
         HashWithIndifferentAccess.new(decoded)
@@ -26,5 +31,6 @@ module Gateway
       end
 
     end
+
   end
 end

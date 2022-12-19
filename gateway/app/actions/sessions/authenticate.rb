@@ -6,6 +6,9 @@ module Gateway
       class Authenticate < Gateway::Action
 
         def handle(request, response)
+          name = request.params[:name]
+
+          response.body = {name: "name is #{name}"}.to_json
         end
 
       end
