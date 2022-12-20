@@ -17,6 +17,9 @@ module Gateway
           auth_service = Services::AuthService::Authenticate.new(username: username, password: password)
           user = auth_service.call
 
+          set_auth_token(request, user)
+
+          user.access_token = Current.access_token
           response.body = user.to_hash.to_json
         rescue ServiceErrors::RequestError => e
           handle_authenticate_exception(e, response)
@@ -26,6 +29,12 @@ module Gateway
           response.status = 401
           response.format = :json
           response.body = {error: "Invalid username or password"}.to_json
+        end
+
+        private
+
+        def validate_access_token
+          # noop
         end
 
       end

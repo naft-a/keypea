@@ -6,7 +6,7 @@ module Gateway
 
       attr_accessor :id
       attr_accessor :username
-      attr_accessor :password
+      attr_accessor :access_token
       attr_accessor :created_at
       attr_accessor :updated_at
 
@@ -15,7 +15,7 @@ module Gateway
       def initialize(**attributes)
         @id = attributes.fetch(:id)
         @username = attributes.fetch(:username)
-        @password = attributes.fetch(:password)
+        @access_token = nil
         @created_at = attributes.fetch(:created_at)
         @updated_at = attributes.fetch(:updated_at)
       end

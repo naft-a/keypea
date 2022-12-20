@@ -6,7 +6,6 @@ module Gateway
       class Create < Gateway::Action
 
         params do
-          optional(:user_id)
           required(:name).filled(:string)
           required(:description).filled(:string)
           required(:password).filled(:string)
@@ -18,7 +17,7 @@ module Gateway
           password = request.params[:password]
 
           create_service = Services::SecretsService::Create.new(
-            user_id: request.params[:user_id],
+            user_id: Current.user_id,
             password: password,
             name: name,
             description: description,

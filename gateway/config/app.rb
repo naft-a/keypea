@@ -2,6 +2,7 @@
 
 require "hanami"
 require "pry-remote"
+require "active_support/time"
 
 module Gateway
   class App < Hanami::App

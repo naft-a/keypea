@@ -9,5 +9,6 @@ module Gateway
     setting :hmac_secret, constructor: Types::String
     setting :auth_api_host, constructor: Types::String
     setting :secrets_api_host, constructor: Types::String
+    setting :redis_url, constructor: Types::String
   end
 end

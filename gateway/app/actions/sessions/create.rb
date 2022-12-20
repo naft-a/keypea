@@ -17,6 +17,9 @@ module Gateway
           create_service = Services::AuthService::Create.new(username: username, password: password)
           user = create_service.call
 
+          set_auth_token(request, user)
+
+          user.access_token = Current.access_token
           response.body = user.to_hash.to_json
         rescue ServiceErrors::RequestError => e
           handle_create_exception(e, response)
@@ -35,6 +38,10 @@ module Gateway
           end
 
           response.body = error.to_json
+        end
+
+        def validate_access_token
+          # noop
         end
 
       end

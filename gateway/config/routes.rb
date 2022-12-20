@@ -7,6 +7,7 @@ module Gateway
     scope :sessions do
       post "/", to: "sessions.create"
       post "/login", to: "sessions.authenticate"
+      delete "/", to: "sessions.destroy"
     end
 
     scope :secrets do

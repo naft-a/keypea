@@ -18,6 +18,7 @@ gem "pry-remote"
 gem "jwt"
 gem "puma"
 gem "rake"
+gem "redis"
 
 group :development, :test do
   gem "dotenv"

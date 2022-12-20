@@ -30,7 +30,7 @@ module Gateway
               ).call
             end
 
-            User.from_api_hash(response.body["user"])
+            user
           rescue APIClient::Errors::RequestError => e
             raise_service_error(e)
           rescue *[KeyError] => e
