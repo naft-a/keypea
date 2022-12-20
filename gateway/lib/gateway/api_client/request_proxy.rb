@@ -28,7 +28,7 @@ module Gateway
         Response.new(response).handle
       rescue Timeout::Error => e
         raise Errors::TimeoutError, e.message
-      rescue Net::HTTPServerException, StandardError => e
+      rescue Net::HTTPServerException => e
         raise Errors::ConnectionError, e.message
       end
 

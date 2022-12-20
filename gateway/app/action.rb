@@ -6,6 +6,8 @@ require "hanami/action"
 module Gateway
   class Action < Hanami::Action
 
+    include Errors
+
     before :validate_params
 
     private
