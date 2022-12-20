@@ -21,6 +21,15 @@ module Gateway
             request.arguments[:password] = @password
 
             response = request.perform
+            user = User.from_api_hash(response.body["user"])
+
+            if response.status == 200
+              SecretsService::CreateEncryptionKey.new(
+                user_id: user.id,
+                password: @password
+              ).call
+            end
+
             User.from_api_hash(response.body["user"])
           rescue APIClient::Errors::RequestError => e
             raise_service_error(e)

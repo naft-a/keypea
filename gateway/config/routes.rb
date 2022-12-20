@@ -18,10 +18,6 @@ module Gateway
       scope :parts do
         post "decrypt", to: "parts.decrypt"
       end
-
-      scope :encryption_keys do
-        post "/", to: "encryption_keys.create"
-      end
     end
   end
 end
