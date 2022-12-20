@@ -4,11 +4,16 @@ module Gateway
   module Actions
     module Sessions
       class Authenticate < Gateway::Action
+        params do
+          required(:username).filled(:string)
+          required(:password).filled(:string)
+        end
 
         def handle(request, response)
-          name = request.params[:name]
+          username = request.params[:username]
+          password = request.params[:password]
 
-          response.body = {name: "name is #{name}"}.to_json
+          response.body = {name: "name is #{username} | password is #{password}"}.to_json
         end
 
       end
