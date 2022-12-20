@@ -2,23 +2,23 @@
 
 module Gateway
   module Services
-    module AuthService
-      class Get < Gateway::Service
+    module SecretsService
+      class Delete < Gateway::Service
 
-        # @param user_id [String]
-        def initialize(user_id:)
-          @user_id = user_id
+        # @param secret_id [String]
+        def initialize(secret_id:)
+          @secret_id = secret_id
         end
 
         # @raise [Gateway::Errors::ServiceErrors::RequestError]
         # @raise [Gateway::Errors::StructErrors::AttributeError]
-        # @return [Gateway::Structures::User]
+        # @return [Gateway::Structures::Secret]
         def call
-          make_request(:auth_api_host, :get, "/users/:user") do |request|
-            request.arguments[:user] = @user_id
+          make_request(:secrets_api_host, :delete, "/secrets/:secret") do |request|
+            request.arguments[:secret] = @secret_id
 
             response = request.perform
-            User.from_api_hash(response.body["user"])
+            Secret.from_api_hash(response.body["secret"])
           rescue APIClientErrors::RequestError => e
             raise_service_error(e)
           rescue *[KeyError] => e

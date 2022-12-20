@@ -2,26 +2,26 @@
 
 module Gateway
   module Services
-    module AuthService
-      class Authenticate < Gateway::Service
+    module SecretsService
+      class DecryptSecretsParts < Gateway::Service
 
-        # @param username [String]
+        # @param secret_id [String]
         # @param password [String]
-        def initialize(username:, password:)
-          @username = username
+        def initialize(secret_id:, password:)
+          @secret_id = secret_id
           @password = password
         end
 
         # @raise [Gateway::Errors::ServiceErrors::RequestError]
         # @raise [Gateway::Errors::StructErrors::AttributeError]
-        # @return [Gateway::Structures::User]
+        # @return [Array<Part>]
         def call
-          make_request(:auth_api_host, :post, "/users/auth") do |request|
-            request.arguments[:username] = @username
+          make_request(:secrets_api_host, :post, "/secrets/:secret/parts/decrypt") do |request|
+            request.arguments[:secret] = @secret_id
             request.arguments[:password] = @password
 
             response = request.perform
-            User.from_api_hash(response.body["user"])
+            response.body["parts"].map { |part| Part.from_api_hash(**part) }
           rescue APIClientErrors::RequestError => e
             raise_service_error(e)
           rescue *[KeyError] => e

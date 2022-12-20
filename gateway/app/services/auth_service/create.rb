@@ -21,8 +21,8 @@ module Gateway
             request.arguments[:password] = @password
 
             response = request.perform
-            User.from_api_hash(response.hash["user"])
-          rescue ApiaClient::RequestError => e
+            User.from_api_hash(response.body["user"])
+          rescue APIClientErrors::RequestError => e
             raise_service_error(e)
           rescue *[KeyError] => e
             raise_struct_error(e)

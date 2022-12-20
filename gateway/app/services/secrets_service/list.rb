@@ -2,8 +2,8 @@
 
 module Gateway
   module Services
-    module AuthService
-      class Get < Gateway::Service
+    module SecretsService
+      class List < Gateway::Service
 
         # @param user_id [String]
         def initialize(user_id:)
@@ -12,13 +12,13 @@ module Gateway
 
         # @raise [Gateway::Errors::ServiceErrors::RequestError]
         # @raise [Gateway::Errors::StructErrors::AttributeError]
-        # @return [Gateway::Structures::User]
+        # @return [Array<Secret>]
         def call
-          make_request(:auth_api_host, :get, "/users/:user") do |request|
-            request.arguments[:user] = @user_id
+          make_request(:secrets_api_host, :get, "/secrets") do |request|
+            request.arguments[:user_id] = @user_id
 
             response = request.perform
-            User.from_api_hash(response.body["user"])
+            response.body["secrets"].map { |secret| Secret.from_api_hash(secret) }
           rescue APIClientErrors::RequestError => e
             raise_service_error(e)
           rescue *[KeyError] => e

@@ -2,8 +2,9 @@
 
 RSpec.shared_context "api client" do
   before do
-    response = Struct.new(:hash).new(response_hash)
-    request = Struct.new(:arguments, :perform).new(request_hash, response)
+    status = response_status rescue 200
+    response = Struct.new(:status, :body).new(status, response_hash)
+    request = Struct.new(:arguments, :perform).new({}, response)
 
     allow_any_instance_of(Gateway::APIClient).to receive(:make_request).and_yield(request)
   end

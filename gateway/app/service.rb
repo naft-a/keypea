@@ -11,7 +11,7 @@ module Gateway
       raise NotImplementedError
     end
 
-    # @param error [ApiaClient::RequestError]
+    # @param error [Gateway::Errors::APIClientErrors::RequestError]
     # @raise [Gateway::Errors::ServiceErrors::RequestError]
     def raise_service_error(error)
       details = {

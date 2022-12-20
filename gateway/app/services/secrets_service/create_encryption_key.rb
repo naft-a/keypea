@@ -2,23 +2,28 @@
 
 module Gateway
   module Services
-    module AuthService
-      class Get < Gateway::Service
+    module SecretsService
+      class CreateEncryptionKey < Gateway::Service
 
         # @param user_id [String]
-        def initialize(user_id:)
+        # @param password [String]
+        def initialize(user_id:, password:)
           @user_id = user_id
+          @password = password
         end
 
         # @raise [Gateway::Errors::ServiceErrors::RequestError]
         # @raise [Gateway::Errors::StructErrors::AttributeError]
-        # @return [Gateway::Structures::User]
+        # @return [Hash]
         def call
-          make_request(:auth_api_host, :get, "/users/:user") do |request|
-            request.arguments[:user] = @user_id
+          make_request(:secrets_api_host, :post, "/encryption_keys") do |request|
+            request.arguments[:user_id] = @user_id
+            request.arguments[:password] = @password
 
             response = request.perform
-            User.from_api_hash(response.body["user"])
+            return {} unless response.status == 200
+
+            JSON.parse(JSON[response.body], symbolize_names: true)
           rescue APIClientErrors::RequestError => e
             raise_service_error(e)
           rescue *[KeyError] => e

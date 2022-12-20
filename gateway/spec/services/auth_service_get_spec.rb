@@ -7,13 +7,12 @@ RSpec.describe Get, type: :service do
   describe ".new" do
     it "initializes the service" do
       service = described_class.new(user_id: "user-id")
-      expect(service).to be_instance_of Get
+      expect(service).to be_instance_of Gateway::Services::AuthService::Get
     end
   end
 
   describe "#call" do
     include_context "api client" do
-      let(:request_hash) { {user_id: "user-id"} }
       let(:response_hash) do
         {
           "user" => {

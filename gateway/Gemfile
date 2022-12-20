@@ -13,7 +13,6 @@ gem "hanami-controller", "~> 2.0"
 gem "hanami-validations", "~> 2.0"
 
 gem "activesupport", '~> 7.0', '>= 7.0.4'
-gem "apia-client", github: "naft-a/apia-ruby-client"
 gem "dry-types", "~> 1.0", ">= 1.6.1"
 gem "pry-remote"
 gem "jwt"
