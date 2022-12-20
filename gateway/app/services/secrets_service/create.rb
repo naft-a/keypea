@@ -33,7 +33,7 @@ module Gateway
 
             response = request.perform
             Secret.from_api_hash(response.body["secret"])
-          rescue APIClientErrors::RequestError => e
+          rescue APIClient::Errors::RequestError => e
             raise_service_error(e)
           rescue *[KeyError] => e
             raise_struct_error(e)

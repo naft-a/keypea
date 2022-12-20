@@ -24,7 +24,7 @@ module Gateway
             return {} unless response.status == 200
 
             JSON.parse(JSON[response.body], symbolize_names: true)
-          rescue APIClientErrors::RequestError => e
+          rescue APIClient::Errors::RequestError => e
             raise_service_error(e)
           rescue *[KeyError] => e
             raise_struct_error(e)

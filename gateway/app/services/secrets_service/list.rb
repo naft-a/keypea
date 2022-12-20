@@ -19,7 +19,7 @@ module Gateway
 
             response = request.perform
             response.body["secrets"].map { |secret| Secret.from_api_hash(secret) }
-          rescue APIClientErrors::RequestError => e
+          rescue APIClient::Errors::RequestError => e
             raise_service_error(e)
           rescue *[KeyError] => e
             raise_struct_error(e)
