@@ -5,7 +5,27 @@ module Gateway
     module Secrets
       class Destroy < Gateway::Action
 
+        params do
+          required(:id).filled(:string)
+        end
+
         def handle(request, response)
+          secret_id = request.params[:id]
+
+          delete_service = Services::SecretsService::Delete.new(secret_id: secret_id)
+          secret = delete_service.call
+
+          response.body = secret.to_hash.to_json
+        rescue ServiceErrors::RequestError => e
+          response.format = :json
+
+          if e.code.to_sym == :secret_not_found
+            response.status = 404
+            response.body = {error: "Secret was not found"}.to_json
+          else
+            response.status = 422
+            response.body = {error: "Something went wrong"}.to_json
+          end
         end
 
       end

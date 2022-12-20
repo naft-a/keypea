@@ -8,7 +8,7 @@ module Gateway
         # @param secret_id [String]
         # @param name [String]
         # @param description [String]
-        def initialize(secret_id:, name:, description:)
+        def initialize(secret_id:, name:, description: "")
           @secret_id = secret_id
           @name = name
           @description = description

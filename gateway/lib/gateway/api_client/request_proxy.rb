@@ -66,6 +66,8 @@ module Gateway
         new_path = path
 
         arguments.each do |key, value|
+          next if value.nil? || value.is_a?(Hash)
+
           new_path = new_path.gsub(key.inspect, value)
         end
 

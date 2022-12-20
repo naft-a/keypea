@@ -21,7 +21,13 @@ module Gateway
 
     def to_hash
       self.instance_variables.each_with_object({}) do |var, hash|
-        hash[var[1..-1]&.to_sym] = self.instance_variable_get(var)
+        value = self.instance_variable_get(var)
+
+        if value.is_a?(Array)
+          value = value.map { |item| item.to_hash }
+        end
+
+        hash[var[1..-1]&.to_sym] = value
       end
     end
 

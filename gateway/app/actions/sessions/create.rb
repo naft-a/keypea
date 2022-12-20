@@ -28,12 +28,13 @@ module Gateway
           response.status = 422
           response.format = :json
 
-          case exception.code.to_sym
-          when :username_exists_error
-            response.body = {error: "A user with this username already exists."}.to_json
-          when :validation_error
-            response.body = {error: "Something went wrong with."}.to_json
+          if exception.code.to_sym == :username_exists_error
+            error = {error: "A user with this username already exists"}
+          else
+            error = {error: "Something went wrong"}
           end
+
+          response.body = error.to_json
         end
 
       end
