@@ -24,7 +24,7 @@ module Api
         schema
 
         group :users do
-          get "/users/:user_id", endpoint: Endpoints::GetUser
+          get "/users/:user", endpoint: Endpoints::GetUser
           post "/users", endpoint: Endpoints::CreateUsers
 
           group :auth do

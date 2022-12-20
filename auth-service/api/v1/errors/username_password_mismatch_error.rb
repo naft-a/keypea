@@ -9,7 +9,7 @@ module Api
         description "An error occurred with the input provided - username does not match the password"
 
         code :username_password_mismatch_error
-        http_status 422
+        http_status 401
 
       end
     end

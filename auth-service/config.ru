@@ -13,7 +13,9 @@ require "api/v1/base"
 
 require "pry-remote" if ENV["RACK_ENV"] == "development"
 
-# ===== MongoDB =====
+use Rack::CommonLogger, Logger.new(STDOUT)
+
+# MongoDB
 Mongoid.load!(File.join(File.dirname(__FILE__), 'mongoid.yml'))
 Mongoid.raise_not_found_error = false
 
@@ -22,8 +24,8 @@ Mongoid.logger = Logger.new(STDERR).tap do |log|
 end
 Mongo::Logger.logger = Mongoid.logger
 
-# ===== Middleware =====
+# Middleware
 use Apia::Rack, Api::V1::Base, "/core/v1", development: ENV["RACK_ENV"] == "development"
 
-# ===== Entrypoint =====
+# Entrypoint
 run AuthService

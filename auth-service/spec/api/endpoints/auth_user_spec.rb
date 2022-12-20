@@ -47,7 +47,7 @@ describe Endpoints::AuthUser, type: :api_endpoint do
         json_body[:password] = "what"
       end
 
-      expect(response.status).to eq 422
+      expect(response.status).to eq 401
     end
 
     it "returns an exception when username does not match" do
@@ -56,7 +56,7 @@ describe Endpoints::AuthUser, type: :api_endpoint do
         json_body[:password] = @password
       end
 
-      expect(response.status).to eq 422
+      expect(response.status).to eq 401
     end
   end
 end
