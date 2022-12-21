@@ -14,8 +14,10 @@ module Gateway
           username = request.params[:username]
           password = request.params[:password]
 
-          auth_service = Services::AuthService::Authenticate.new(username: username, password: password)
-          user = auth_service.call
+          user = Services::AuthService::Authenticate.new(
+            username: username,
+            password: password
+          ).call
 
           set_auth_token(request, user)
 

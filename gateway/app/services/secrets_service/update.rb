@@ -7,11 +7,11 @@ module Gateway
 
         # @param secret_id [String]
         # @param name [String]
-        # @param description [String]
-        def initialize(secret_id:, name:, description: "")
+        # @param description [String, nil]
+        def initialize(secret_id:, name:, description: nil)
           @secret_id = secret_id
           @name = name
-          @description = description
+          @description = description || ""
         end
 
         # @raise [Gateway::Errors::ServiceErrors::RequestError]

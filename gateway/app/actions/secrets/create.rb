@@ -12,19 +12,13 @@ module Gateway
         end
 
         def handle(request, response)
-          name = request.params[:name]
-          description = request.params[:description]
-          password = request.params[:password]
-
-          create_service = Services::SecretsService::Create.new(
+          secret = Services::SecretsService::Create.new(
             user_id: Current.user_id,
-            password: password,
-            name: name,
-            description: description,
+            password: request.params[:password],
+            name: request.params[:name],
+            description: request.params[:description],
             parts: []
-          )
-
-          secret = create_service.call
+          ).call
 
           response.body = secret.to_hash.to_json
         rescue ServiceErrors::RequestError => e

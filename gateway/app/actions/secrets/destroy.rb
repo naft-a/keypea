@@ -10,10 +10,9 @@ module Gateway
         end
 
         def handle(request, response)
-          secret_id = request.params[:id]
-
-          delete_service = Services::SecretsService::Delete.new(secret_id: secret_id)
-          secret = delete_service.call
+          secret = Services::SecretsService::Delete.new(
+            secret_id: request.params[:id]
+          ).call
 
           response.body = secret.to_hash.to_json
         rescue ServiceErrors::RequestError => e

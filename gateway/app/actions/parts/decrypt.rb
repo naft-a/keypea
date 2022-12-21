@@ -14,12 +14,11 @@ module Gateway
           secret_id = request.params[:secret_id]
           password = request.params[:password]
 
-          decrypt_service = Services::SecretsService::DecryptSecretsParts.new(
+          parts = Services::SecretsService::DecryptSecretsParts.new(
             secret_id: secret_id,
             password: password
-          )
+          ).call
 
-          parts = decrypt_service.call
           response.body = parts.map { |part| part.to_hash }.to_json
         rescue ServiceErrors::RequestError => e
           response.status = 422
