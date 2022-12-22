@@ -4,19 +4,24 @@ module Gateway
   class Routes < Hanami::Routes
     root { "Hello from Gateway" }
 
-    scope :sessions do
+    scope "sessions" do
       post "/", to: "sessions.create"
       post "/login", to: "sessions.authenticate"
       delete "/", to: "sessions.destroy"
     end
 
-    scope :secrets do
+    scope "secrets" do
       get "/", to: "secrets.index"
       post "/", to: "secrets.create"
       patch ":id", to: "secrets.update"
       delete ":id", to: "secrets.destroy"
 
-      scope :parts do
+      scope ":secret_id/parts" do
+        post "/", to: "parts.create"
+        delete ":id", to: "parts.destroy"
+      end
+
+      scope "parts" do
         post "decrypt", to: "parts.decrypt"
       end
     end
