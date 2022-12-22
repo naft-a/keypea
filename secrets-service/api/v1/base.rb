@@ -13,6 +13,8 @@ require_relative "./endpoints/create_secrets"
 require_relative "./endpoints/list_secrets"
 require_relative "./endpoints/update_secrets"
 require_relative "./endpoints/delete_secrets"
+require_relative "./endpoints/create_secrets_parts"
+require_relative './endpoints/delete_secrets_parts'
 require_relative "./endpoints/decrypt_secrets_parts"
 require_relative "./endpoints/create_encryption_keys"
 
@@ -36,6 +38,8 @@ module Api
           delete "/secrets/:secret", endpoint: Endpoints::DeleteSecrets
 
           group :parts do
+            post "/secrets/:secret/parts", endpoint: Endpoints::CreateSecretsParts
+            delete "/secrets/:secret/parts/:part", endpoint: Endpoints::DeleteSecretsParts
             post "/secrets/:secret/parts/decrypt", endpoint: Endpoints::DecryptSecretsParts
           end
         end
