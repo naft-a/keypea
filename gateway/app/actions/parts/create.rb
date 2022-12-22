@@ -18,8 +18,8 @@ module Gateway
           part = Services::SecretsService::CreateSecretsParts.new(
             secret_id: request.params[:secret_id],
             password: request.params[:password],
-            key: request.params[:key],
-            value: request.params[:value]
+            key: request.params[:part][:key],
+            value: request.params[:part][:value]
           ).call
 
           response.body = part.to_hash.to_json

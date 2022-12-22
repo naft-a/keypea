@@ -3,7 +3,7 @@
 module Gateway
   module Actions
     module Sessions
-      class Create < Gateway::Action
+      class Signup < Gateway::Action
 
         params do
           required(:username).filled(:string)

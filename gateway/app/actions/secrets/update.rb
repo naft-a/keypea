@@ -6,14 +6,14 @@ module Gateway
       class Update < Gateway::Action
 
         params do
-          required(:id).filled(:string)
+          required(:secret_id).filled(:string)
           required(:name).filled(:string)
           optional(:description).value(:string)
         end
 
         def handle(request, response)
           secret = Services::SecretsService::Update.new(
-            secret_id: request.params[:id],
+            secret_id: request.params[:secret_id],
             name: request.params[:name],
             description: request.params[:description]
           ).call

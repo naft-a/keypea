@@ -7,13 +7,13 @@ module Gateway
 
         params do
           required(:secret_id).filled(:string)
-          required(:id).filled(:string)
+          required(:part_id).filled(:string)
         end
 
         def handle(request, response)
           part = Services::SecretsService::DeleteSecretsParts.new(
             secret_id: request.params[:secret_id],
-            part_id: request.params[:id]
+            part_id: request.params[:part_id]
           ).call
 
           response.body = part.to_hash.to_json

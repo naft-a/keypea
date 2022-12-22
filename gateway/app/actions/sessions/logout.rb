@@ -3,7 +3,7 @@
 module Gateway
   module Actions
     module Sessions
-      class Destroy < Gateway::Action
+      class Logout < Gateway::Action
 
         def handle(request, response)
           token = request.env["HTTP_AUTHORIZATION"]&.sub(/\ABearer /, "")

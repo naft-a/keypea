@@ -6,12 +6,12 @@ module Gateway
       class Destroy < Gateway::Action
 
         params do
-          required(:id).filled(:string)
+          required(:secret_id).filled(:string)
         end
 
         def handle(request, response)
           secret = Services::SecretsService::Delete.new(
-            secret_id: request.params[:id]
+            secret_id: request.params[:secret_id]
           ).call
 
           response.body = secret.to_hash.to_json

@@ -5,25 +5,19 @@ module Gateway
     root { "Hello from Gateway" }
 
     scope "sessions" do
-      post "/", to: "sessions.create"
+      post "/", to: "sessions.signup"
       post "/login", to: "sessions.authenticate"
-      delete "/", to: "sessions.destroy"
+      delete "/logout", to: "sessions.logout"
     end
 
-    scope "secrets" do
-      get "/", to: "secrets.index"
-      post "/", to: "secrets.create"
-      patch ":id", to: "secrets.update"
-      delete ":id", to: "secrets.destroy"
+    get "/secrets", to: "secrets.index"
+    post "/secrets", to: "secrets.create"
+    patch "/secrets/:secret_id", to: "secrets.update"
+    delete "/secrets/:secret_id", to: "secrets.destroy"
 
-      scope ":secret_id/parts" do
-        post "/", to: "parts.create"
-        delete ":id", to: "parts.destroy"
-      end
+    post "/secrets/:secret_id/parts/decrypt", to: "parts.decrypt"
+    post "/secrets/:secret_id/parts/", to: "parts.create"
+    delete "/secrets/:secret_id/parts/:part_id", to: "parts.destroy"
 
-      scope "parts" do
-        post "decrypt", to: "parts.decrypt"
-      end
-    end
   end
 end

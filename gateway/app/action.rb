@@ -19,6 +19,7 @@ module Gateway
 
     def validate_access_token(request, _response)
       given_token = request.env["HTTP_AUTHORIZATION"]&.sub(/\ABearer /, "")
+      halt 401 if given_token.nil?
 
       # fetch the refresh token from the db to check for existing session
       fetched_token = RedisClient.get(given_token)
@@ -41,6 +42,8 @@ module Gateway
 
       # decode the access token now to check some properties
       access_token = JSONWebToken.decode(given_token)
+      halt 401 unless access_token
+
       user_id = access_token[:id]
       halt 401 if user_id.blank?
 
