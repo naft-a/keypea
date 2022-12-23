@@ -17,6 +17,7 @@ gem "dry-types", "~> 1.0", ">= 1.6.1"
 gem "pry-remote"
 gem "jwt"
 gem "puma"
+gem 'rack-cors'
 gem "rake"
 gem "redis"
 
