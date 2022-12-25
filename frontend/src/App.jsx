@@ -5,7 +5,7 @@ import MainLayout from "./layouts/MainLayout"
 
 // pages
 import Signup, { singupAction } from "./pages/Signup"
-import SecretsIndex from "./pages/SecretsIndex"
+import SecretsIndex, { secretsLoader } from "./pages/SecretsIndex"
 import SecretsShow from "./pages/SecretsShow"
 
 // /sign_up ->
@@ -30,6 +30,7 @@ const appRouter = createBrowserRouter([
       {
         path: "/secrets",
         element: <SecretsIndex />,
+        loader: secretsLoader,
         children: [
           {
             path: ":id",

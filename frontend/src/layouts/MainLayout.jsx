@@ -8,7 +8,8 @@ export default function MainLayout() {
         <nav>
           <h1>Keypea</h1>
           <NavLink to="/">Home</NavLink>
-          <Link to="/signup">Signup</Link>
+          <NavLink to="/signup">Signup</NavLink>
+          <NavLink to="/secrets">Secrets</NavLink>
         </nav>
       </header>
       <main>

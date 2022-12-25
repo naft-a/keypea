@@ -1,6 +1,6 @@
 import { Form, redirect, useActionData } from "react-router-dom"
 import { useEffect, useState } from "react"
-import { createUser } from "../util/api";
+import { createUser } from "../util/api"
 
 export const singupAction = async ({ request }) => {
   const formData = await request.formData()
