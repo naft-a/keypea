@@ -19,3 +19,23 @@ nav a {
 #signup form input.mismatch {
   background-color: rgba(255, 36, 36, 0.47);
 }
+
+#dialog header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+#dialog header div {
+  margin-top: auto;
+  margin-bottom: auto;
+  margin-left: 0.5rem;
+}
+
+#dialog button {
+  padding: 0.5rem;
+}
+
+#dialog button:after {
+  content: "❌";
+}

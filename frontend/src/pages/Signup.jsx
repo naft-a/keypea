@@ -2,7 +2,7 @@ import { Form, redirect, useActionData } from "react-router-dom"
 import { useEffect, useState } from "react"
 import { createUser } from "../util/api"
 
-export const singupAction = async ({ request }) => {
+export async function signupAction({ request }) {
   const formData = await request.formData()
   const payload = {
     username: formData.get("username"),
@@ -17,7 +17,7 @@ export const singupAction = async ({ request }) => {
   }
 }
 
-export default function Signup({ props }) {
+export default function Signup() {
   const [matches, setMatches] = useState(true)
   const [password, setPassword] = useState("")
   const [confirmationPassword, setConfirmationPassword] = useState("")

@@ -4,7 +4,8 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom"
 import MainLayout from "./layouts/MainLayout"
 
 // pages
-import Signup, { singupAction } from "./pages/Signup"
+import { loginAction } from "./pages/LoginDialog";
+import Signup, { signupAction } from "./pages/Signup"
 import SecretsIndex, { secretsLoader } from "./pages/SecretsIndex"
 import SecretsShow from "./pages/SecretsShow"
 
@@ -25,7 +26,17 @@ const appRouter = createBrowserRouter([
       {
         path: "/signup",
         element: <Signup />,
-        action: singupAction,
+        action: signupAction,
+      },
+      {
+        path: "/unlock",
+        element: null,
+        action: null
+      },
+      {
+        path: "/login",
+        element: null, // rendered in Main Layout
+        action: loginAction
       },
       {
         path: "/secrets",
