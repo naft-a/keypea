@@ -3,7 +3,8 @@ import { getSecrets } from "../util/api"
 
 export async function secretsLoader() {
   // todo: get token from context
-  return getSecrets("eyJhbGciOiJIUzI1NiJ9.eyJpZCI6IjYzYTdhOTllNGNmYWQxNDNmMTcxOGRhOCIsImV4cCI6MTY3MjAxODcxOH0.KK2a4CK-yIe2agKGkDmz0ec78KdobcxzXa6jU05rycw")
+  const secrets = await getSecrets("eyJhbGciOiJIUzI1NiJ9.eyJpZCI6IjYzYTIwN2M5NGNmYWQxMWIxYzJlMGU0NiIsImV4cCI6MTY3MjE5MjMxMH0.QjBXKRiVJRBqZ8N-vzuYS45_dPXLXgcKCHJ67MZ1kUU")
+  return secrets
 }
 
 export default function SecretsIndex() {
@@ -12,7 +13,7 @@ export default function SecretsIndex() {
   return(
     <>
       <h3>Secrets</h3>
-      {secrets && secrets.error && <code>{secrets.error}</code>}
+      {secrets?.error && <code>{secrets.error}</code>}
       <ul>
         {secrets.map(secret => (
           <li key={secret.id}>

@@ -1,6 +1,6 @@
 export async function createUser(payload) {
   return await makeRequest({
-    url: "https://gateway.localhost/sessions",
+    path: "/sessions",
     method: "POST",
     body: JSON.stringify(payload),
     headers: {
@@ -12,7 +12,7 @@ export async function createUser(payload) {
 
 export async function authenticateUser(payload) {
   return await makeRequest({
-    url: "https://gateway.localhost/sessions/login",
+    path: "/sessions/login",
     method: "POST",
     body: JSON.stringify(payload),
     headers: {
@@ -24,7 +24,7 @@ export async function authenticateUser(payload) {
 
 export async function getSecrets(token) {
   return await makeRequest({
-    url: "https://gateway.localhost/secrets",
+    path: "/secrets",
     method: "GET",
     headers: {
       "Content-Type": "application/json",
@@ -37,9 +37,9 @@ export async function getSecrets(token) {
 // private
 
 async function makeRequest({...params}) {
-  const { url, method, headers, body } = params
+  const { path, method, headers, body } = params
 
-  return await fetch(url, {
+  return await fetch(`https://gateway.localhost${path}`, {
     method: method,
     headers: headers,
     body: body

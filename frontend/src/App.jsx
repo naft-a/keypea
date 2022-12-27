@@ -4,7 +4,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom"
 import MainLayout from "./layouts/MainLayout"
 
 // pages
-import { loginAction } from "./pages/LoginDialog";
+import Home from "./pages/Home"
 import Signup, { signupAction } from "./pages/Signup"
 import SecretsIndex, { secretsLoader } from "./pages/SecretsIndex"
 import SecretsShow from "./pages/SecretsShow"
@@ -24,19 +24,13 @@ const appRouter = createBrowserRouter([
     element: <MainLayout />,
     children: [
       {
+        index: true,
+        element: <Home />
+      },
+      {
         path: "/signup",
         element: <Signup />,
         action: signupAction,
-      },
-      {
-        path: "/unlock",
-        element: null,
-        action: null
-      },
-      {
-        path: "/login",
-        element: null, // rendered in Main Layout
-        action: loginAction
       },
       {
         path: "/secrets",
@@ -51,10 +45,6 @@ const appRouter = createBrowserRouter([
                 path: "parts/new",
                 element: ""
               },
-              {
-                path: "parts/decrypt",
-                element: ""
-              }
             ]
           }
         ]

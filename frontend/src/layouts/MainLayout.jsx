@@ -17,7 +17,6 @@ export default function MainLayout() {
         <Outlet />
 
         <LoginDialog />
-        {/*<Unlock />*/}
       </main>
     </>
   )
