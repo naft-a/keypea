@@ -2,18 +2,26 @@ import { useEffect, useRef, useState } from "react"
 
 export default function Dialog({children, ...props}) {
   const dialogElement = useRef(null)
-  const [isOpen, setIsOpen] = useState(false)
+
+  const openDialog = () => {
+    dialogElement.current.showModal()
+  }
+
+  const closeDialog = () => {
+    dialogElement.current.close()
+  }
 
   useEffect(() => {
-    const triggerElement = document.querySelector(`#${props.identifier}`)
-
-    const openDialog = () => {
-      setIsOpen(true)
+    dialogElement.current.removeAttribute('open')
+    if (props.show) {
+      openDialog()
     }
+
+    const triggerElement = document.querySelector(`#${props.identifier}`)
 
     const closeDialogOnEscape = (event) => {
       if (event.key === "Escape") {
-        setIsOpen(false)
+        closeDialog()
       }
     }
 
@@ -24,15 +32,7 @@ export default function Dialog({children, ...props}) {
       triggerElement.addEventListener("click", openDialog)
       document.removeEventListener("keydown", closeDialogOnEscape, false)
     };
-  })
-
-  useEffect(() => {
-    if (isOpen) {
-      dialogElement.current.showModal()
-    } else {
-      dialogElement.current.close()
-    }
-  }, [isOpen])
+  }, [])
 
   return (
     <dialog id="dialog" ref={dialogElement}>
@@ -43,7 +43,7 @@ export default function Dialog({children, ...props}) {
           </strong>
         </div>
         <div>
-          <button value="close" onClick={(_e) => { setIsOpen(false) }} />
+          <button value="close" onClick={closeDialog} />
         </div>
       </header>
       { children }

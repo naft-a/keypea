@@ -1,10 +1,12 @@
 import Dialog from "../components/Dialog"
-import { useState } from "react"
+import AuthContext from "../AuthContext"
+import {useState, useContext, useEffect} from "react"
 import { useNavigate } from "react-router-dom"
 import { authenticateUser } from "../util/api"
 
 export default function LoginDialog() {
   const [data, setData] = useState({})
+  const { setToken } = useContext(AuthContext)
   const navigate = useNavigate()
 
   const formSubmit = async (event) => {
@@ -24,12 +26,17 @@ export default function LoginDialog() {
       return
     }
 
-    console.log(data)
+    const token = data.access_token
+    setToken(token)
+
+    event.target.username.value = ""
+    event.target.password.value = ""
+    event.target.parentElement.close()
     navigate("/secrets")
   }
 
   return (
-    <Dialog identifier="loginDialog" name="Log in">
+    <Dialog identifier="loginDialog" name="Log in" show={!window.authenticated}>
       <div>
         {data?.error && <code>{data.error}</code>}
       </div>

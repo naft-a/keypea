@@ -1,10 +1,15 @@
 import { Link, redirect, useLoaderData } from "react-router-dom"
 import { getSecrets } from "../util/api"
 
-export async function secretsLoader() {
-  // todo: get token from context
-  const secrets = await getSecrets("eyJhbGciOiJIUzI1NiJ9.eyJpZCI6IjYzYTIwN2M5NGNmYWQxMWIxYzJlMGU0NiIsImV4cCI6MTY3MjE5MjMxMH0.QjBXKRiVJRBqZ8N-vzuYS45_dPXLXgcKCHJ67MZ1kUU")
-  return secrets
+export async function SecretsLoader({ request, authContext }) {
+  const { token } = authContext
+
+  const fetchedSecrets = await getSecrets(token)
+  if (fetchedSecrets) {
+    return fetchedSecrets
+  } else {
+    return []
+  }
 }
 
 export default function SecretsIndex() {
