@@ -2,6 +2,10 @@ nav a {
   margin-right: 0.5em;
 }
 
+nav a.active {
+  color: darkgray;
+}
+
 #signup p {
   color: gray;
 }
@@ -32,10 +36,29 @@ nav a {
   margin-left: 0.5rem;
 }
 
+
+#dialog .error {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+
+#dialog .error code {
+  color: red;
+}
+
 #dialog button {
   padding: 0.5rem;
 }
 
 #dialog button:after {
   content: "❌";
+}
+
+#secrets {
+  margin-top: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+#home p {
+  color: gray;
 }

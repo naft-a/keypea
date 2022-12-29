@@ -2,11 +2,7 @@ export async function createUser(payload) {
   return await makeRequest({
     path: "/sessions",
     method: "POST",
-    body: JSON.stringify(payload),
-    headers: {
-      "Content-Type": "application/json",
-      "Accept": "application/json"
-    }
+    body: JSON.stringify(payload)
   })
 }
 
@@ -14,11 +10,7 @@ export async function authenticateUser(payload) {
   return await makeRequest({
     path: "/sessions/login",
     method: "POST",
-    body: JSON.stringify(payload),
-    headers: {
-      "Content-Type": "application/json",
-      "Accept": "application/json"
-    }
+    body: JSON.stringify(payload)
   })
 }
 
@@ -26,39 +18,36 @@ export async function getSecrets(token) {
   return await makeRequest({
     path: "/secrets",
     method: "GET",
-    requireToken: true,
-    headers: {
-      "Content-Type": "application/json",
-      "Accept": "application/json",
-      "Authorization": `Bearer ${token}`
-    }
+    token: token,
   })
 }
 
 // private
 
 async function makeRequest({...params}) {
-  const { path, method, headers, body, requireToken } = params
+  const { path, method, body, token } = params
+  let defaultHeaders = {
+    "Content-Type": "application/json",
+    "Accept": "application/json"
+  }
 
   return await fetch(`https://gateway.localhost${path}`, {
     method: method,
-    headers: headers,
+    headers: {...(token) && {"Authorization": `Bearer ${token}`}, ...defaultHeaders},
     body: body
   }).then((response) => {
-      if (!requireToken) {
-        return response.json()
-      }
+      return new Promise((resolve, reject) => {
+        if (response.status === 401) {
+          window.authenticated = false
 
-      if (response.status === 401) {
-        window.authenticated = false
+          reject("Unauthenticated user")
+        } else {
+          window.authenticated = true
 
-        return null
-      } else {
-        window.authenticated = true
-
-        return response.json()
-      }
+          resolve(response.json())
+        }
+      })
     })
     .then((data) => { return data })
-    .catch((err) => { return {error: err}})
+    .catch((err) => { return {error: err.toString()} })
 }

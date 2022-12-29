@@ -1,41 +1,38 @@
 import { useEffect, useRef, useState } from "react"
 
 export default function Dialog({children, ...props}) {
-  const dialogElement = useRef(null)
+  const dialog = useRef(null)
 
   const openDialog = () => {
-    dialogElement.current.showModal()
+    dialog.current.showModal()
   }
 
   const closeDialog = () => {
-    dialogElement.current.close()
+    dialog.current.close()
   }
 
   useEffect(() => {
-    dialogElement.current.removeAttribute('open')
-    if (props.show) {
-      openDialog()
-    }
+    dialog.current.removeAttribute('open')
+
+    if (props.show) { openDialog() }
 
     const triggerElement = document.querySelector(`#${props.identifier}`)
-
+    triggerElement.addEventListener("click", openDialog)
     const closeDialogOnEscape = (event) => {
       if (event.key === "Escape") {
         closeDialog()
       }
     }
 
-    triggerElement.addEventListener("click", openDialog)
     document.addEventListener("keydown", closeDialogOnEscape, false)
-
     return () => {
-      triggerElement.addEventListener("click", openDialog)
+      triggerElement.removeEventListener("click", openDialog)
       document.removeEventListener("keydown", closeDialogOnEscape, false)
     };
   }, [])
 
   return (
-    <dialog id="dialog" ref={dialogElement}>
+    <dialog id="dialog" ref={dialog}>
       <header>
         <div>
           <strong>

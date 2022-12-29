@@ -1,10 +1,8 @@
-import { Link, redirect, useLoaderData } from "react-router-dom"
+import { Link, useLoaderData } from "react-router-dom"
 import { getSecrets } from "../util/api"
 
-export async function SecretsLoader({ request, authContext }) {
-  const { token } = authContext
-
-  const fetchedSecrets = await getSecrets(token)
+export async function secretsLoader() {
+  const fetchedSecrets = await getSecrets(window.token)
   if (fetchedSecrets) {
     return fetchedSecrets
   } else {
@@ -15,18 +13,37 @@ export async function SecretsLoader({ request, authContext }) {
 export default function SecretsIndex() {
   const secrets = useLoaderData()
 
-  return(
-    <>
-      <h3>Secrets</h3>
-      {secrets?.error && <code>{secrets.error}</code>}
+  const renderSecrets = () => {
+    if (secrets instanceof Object && secrets.error) {
+      return (
+        <code>{secrets.error}</code>
+      )
+    }
+
+    if (secrets.length === 0) {
+      return(
+        <>
+          <h4>Nothing found here</h4>
+          <p>You don't seem to have any secrets.</p>
+        </>
+      )
+    }
+
+    return (
       <ul>
-        {secrets.map(secret => (
+        {secrets && secrets.map(secret => (
           <li key={secret.id}>
             <Link to={secret.id}>{secret.name}</Link>
             <p>{secret.description}</p>
           </li>
         ))}
       </ul>
-    </>
+    )
+  }
+
+  return(
+    <section id="secrets">
+      {renderSecrets(secrets)}
+    </section>
   )
 }

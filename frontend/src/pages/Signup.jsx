@@ -2,9 +2,7 @@ import { Form, redirect, useActionData } from "react-router-dom"
 import { useEffect, useState } from "react"
 import { createUser } from "../util/api"
 
-export async function SignupAction({ request, authContext }) {
-  const { token, setToken } = authContext
-
+export async function signupAction({ request }) {
   const formData = await request.formData()
   const payload = {
     username: formData.get("username"),
@@ -15,7 +13,8 @@ export async function SignupAction({ request, authContext }) {
   if (data.error) {
     return data
   } else {
-    setToken(data.access_token)
+    window.token = data.access_token
+
     return redirect("/secrets")
   }
 }
