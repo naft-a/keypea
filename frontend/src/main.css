@@ -1,3 +1,15 @@
+pre {
+  font-size: 0.9rem;
+}
+
+#heading {
+  display: flex;
+}
+
+#heading img {
+  transform: rotate(180deg);
+}
+
 nav a {
   margin-right: 0.5em;
 }
@@ -61,4 +73,10 @@ nav a.active {
 
 #home p {
   color: gray;
+}
+
+#decryptDialog {
+  float: right;
+  font-size: 1.3rem;
+  text-decoration: none;
 }

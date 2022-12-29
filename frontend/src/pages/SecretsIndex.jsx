@@ -6,6 +6,8 @@ export async function secretsLoader() {
 
   const fetchedSecrets = await getSecrets(session.token)
   if (fetchedSecrets) {
+    sessionStorage.setItem("secrets", JSON.stringify(fetchedSecrets))
+
     return fetchedSecrets
   } else {
     return []
@@ -32,14 +34,16 @@ export default function SecretsIndex() {
     }
 
     return (
-      <ul>
+      <ol>
         {secrets && secrets.map(secret => (
           <li key={secret.id}>
-            <Link to={secret.id}>{secret.name}</Link>
-            <p>{secret.description}</p>
+            <pre>
+              <Link to={secret.id}>{secret.name}</Link>
+              <p>{secret.description}</p>
+            </pre>
           </li>
         ))}
-      </ul>
+      </ol>
     )
   }
 

@@ -4,12 +4,14 @@ import Session from "./util/session"
 
 // layouts
 import MainLayout from "./layouts/MainLayout"
+import SecretsLayout from "./layouts/SecretsLayout"
 
 // pages
 import Home from "./pages/Home"
 import Signup, { signupAction } from "./pages/Signup"
 import SecretsIndex, { secretsLoader } from "./pages/SecretsIndex"
-import SecretsShow from "./pages/SecretsShow"
+import SecretsShow, { secretLoader } from "./pages/SecretsShow"
+import PartsIndex, { partsLoader } from "./pages/PartsIndex"
 
 const session = Session.initialize({
   token: null,
@@ -46,21 +48,25 @@ const appRouter = createBrowserRouter([
       },
       {
         path: "/secrets",
-        element: <SecretsIndex />,
-        loader: secretsLoader,
+        element: <SecretsLayout />,
         children: [
+          {
+            index: true,
+            element: <SecretsIndex />,
+            loader: secretsLoader
+          },
           {
             path: ":id",
             element: <SecretsShow />,
-            children: [
-              {
-                path: "parts/new",
-                element: ""
-              },
-            ]
+            loader: secretLoader
+          },
+          {
+            path: ":id/parts",
+            element: <PartsIndex />,
+            loader: partsLoader
           }
-        ]
-      },
+        ],
+      }
     ]
   }
 ])

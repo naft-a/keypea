@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Outlet, NavLink, Link } from "react-router-dom"
 import LoginDialog from "../dialogs/LoginDialog.jsx";
+import Logo from "../assets/pea.svg"
 
 export default function MainLayout() {
   const [authenticated, setAuthenticated] = useState(false)
@@ -16,8 +17,11 @@ export default function MainLayout() {
   return (
     <>
       <header>
-        <nav>
+        <div id="heading">
           <h1>Keypea</h1>
+          <img src={Logo} alt="Your SVG" width={70} />
+        </div>
+        <nav>
           <NavLink to="/">[ Home ]</NavLink>
           <Link to="#" id="loginDialog" hidden={authenticated}>[ Login ]</Link>
           <NavLink to="/signup" hidden={authenticated}>[ Signup ]</NavLink>
