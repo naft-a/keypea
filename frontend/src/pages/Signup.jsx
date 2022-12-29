@@ -13,7 +13,8 @@ export async function signupAction({ request }) {
   if (data.error) {
     return data
   } else {
-    window.token = data.access_token
+    session.token = data.access_token
+    session.dispatchAuthenticated(true)
 
     return redirect("/secrets")
   }

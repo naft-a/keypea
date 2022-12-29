@@ -24,7 +24,8 @@ export default function LoginDialog() {
       return
     }
 
-    window.token = data.access_token
+    session.token = data.access_token
+    session.dispatchAuthenticated(true)
 
     event.target.username.value = ""
     event.target.password.value = ""

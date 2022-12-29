@@ -1,3 +1,7 @@
+/**
+ * @param {Object} payload
+ * @return {Object}
+ */
 export async function createUser(payload) {
   return await makeRequest({
     path: "/sessions",
@@ -6,6 +10,10 @@ export async function createUser(payload) {
   })
 }
 
+/**
+ * @param {Object} payload
+ * @return {Object}
+ */
 export async function authenticateUser(payload) {
   return await makeRequest({
     path: "/sessions/login",
@@ -14,6 +22,10 @@ export async function authenticateUser(payload) {
   })
 }
 
+/**
+ * @param {String} token
+ * @return {Object}
+ */
 export async function logoutUser(token) {
   return await makeRequest({
     path: "/sessions/logout",
@@ -22,6 +34,10 @@ export async function logoutUser(token) {
   })
 }
 
+/**
+ * @param {String} token
+ * @return {Object}
+ */
 export async function getSecrets(token) {
   return await makeRequest({
     path: "/secrets",
@@ -46,12 +62,11 @@ async function makeRequest({...params}) {
   }).then((response) => {
       return new Promise((resolve, reject) => {
         if (response.status === 401) {
-          window.authenticated = false
+          session.token = null
+          session.dispatchAuthenticated(false)
 
           reject("Unauthenticated user")
         } else {
-          window.authenticated = true
-
           resolve(response.json())
         }
       })

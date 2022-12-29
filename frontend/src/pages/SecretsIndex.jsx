@@ -1,8 +1,10 @@
-import { Link, useLoaderData } from "react-router-dom"
+import { Link, redirect, useLoaderData } from "react-router-dom"
 import { getSecrets } from "../util/api"
 
 export async function secretsLoader() {
-  const fetchedSecrets = await getSecrets(window.token)
+  if (!session.token) { return redirect("/") }
+
+  const fetchedSecrets = await getSecrets(session.token)
   if (fetchedSecrets) {
     return fetchedSecrets
   } else {

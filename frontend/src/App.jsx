@@ -1,5 +1,6 @@
 import { createBrowserRouter, redirect, RouterProvider } from "react-router-dom"
 import { logoutUser } from "./util/api"
+import Session from "./util/session"
 
 // layouts
 import MainLayout from "./layouts/MainLayout"
@@ -10,14 +11,13 @@ import Signup, { signupAction } from "./pages/Signup"
 import SecretsIndex, { secretsLoader } from "./pages/SecretsIndex"
 import SecretsShow from "./pages/SecretsShow"
 
-// /sign_up ->
-//    /secrets [secrets showSecret() newSecret() logout()]
-//    /secret/show [secret parts newPart()]
-//    /secret/new [name description]
-//      -> /secrets/show [secret parts newPart() decryptSecrets()]
-//    /secret/:id/parts/new [key value password]
-//    /secret/:id/parts/decrypt [password]
-//    /logout
+const session = Session.initialize({
+  token: null,
+  dispatchAuthenticated: (param) => {
+    const event = new CustomEvent("authenticated", {detail: param})
+    self.dispatchEvent(event)
+  }
+})
 
 const appRouter = createBrowserRouter([
   {
@@ -36,7 +36,11 @@ const appRouter = createBrowserRouter([
       {
         path: "/logout",
         loader: async () => {
-          await logoutUser(window.token)
+          await logoutUser(session.token)
+
+          session.token = null
+          session.dispatchAuthenticated(false)
+
           return redirect("/")
         },
       },
