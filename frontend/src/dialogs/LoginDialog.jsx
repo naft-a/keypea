@@ -3,7 +3,7 @@ import { useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { authenticateUser } from "../util/api"
 
-export default function LoginDialog() {
+export default function LoginDialog({ show }) {
   const [data, setData] = useState({})
   const navigate = useNavigate()
 
@@ -35,7 +35,7 @@ export default function LoginDialog() {
   }
 
   return (
-    <Dialog identifier="loginDialog" name="Log in">
+    <Dialog identifier="loginDialog" name="Log in" show={show}>
       <div className="error">
         {data?.error && <code>{data.error}</code>}
       </div>

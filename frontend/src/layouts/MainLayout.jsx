@@ -5,15 +5,11 @@ import LoginDialog from "../dialogs/LoginDialog.jsx";
 export default function MainLayout() {
   const [authenticated, setAuthenticated] = useState(false)
 
-  const updateHiddenAttribute = (event) => {
-    setAuthenticated(event.detail)
-  }
-
   useEffect(() => {
-    self.addEventListener("authenticated", updateHiddenAttribute)
+    self.addEventListener("authenticated", (event) => { setAuthenticated(event.detail) })
 
     return () => {
-      self.removeEventListener("authenticated", updateHiddenAttribute)
+      self.removeEventListener("authenticated",  (event) => { setAuthenticated(event.detail) })
     }
   })
 
@@ -32,7 +28,7 @@ export default function MainLayout() {
       <main>
         <Outlet />
 
-        <LoginDialog />
+        <LoginDialog show={!authenticated} />
       </main>
     </>
   )
