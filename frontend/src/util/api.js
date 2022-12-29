@@ -14,6 +14,14 @@ export async function authenticateUser(payload) {
   })
 }
 
+export async function logoutUser(token) {
+  return await makeRequest({
+    path: "/sessions/logout",
+    method: "DELETE",
+    token: token
+  })
+}
+
 export async function getSecrets(token) {
   return await makeRequest({
     path: "/secrets",

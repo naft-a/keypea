@@ -1,4 +1,5 @@
-import { createBrowserRouter, RouterProvider } from "react-router-dom"
+import { createBrowserRouter, redirect, RouterProvider } from "react-router-dom"
+import { logoutUser } from "./util/api"
 
 // layouts
 import MainLayout from "./layouts/MainLayout"
@@ -31,6 +32,13 @@ const appRouter = createBrowserRouter([
         path: "/signup",
         element: <Signup />,
         action: signupAction,
+      },
+      {
+        path: "/logout",
+        loader: async () => {
+          await logoutUser(window.token)
+          return redirect("/")
+        },
       },
       {
         path: "/secrets",

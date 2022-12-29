@@ -11,6 +11,7 @@ export default function MainLayout() {
           <Link to="#" id="loginDialog">[ Login ]</Link>
           <NavLink to="/signup">[ Signup ]</NavLink>
           <NavLink to="/secrets">[ Secrets ]</NavLink>
+          <NavLink to="/logout">[ Logout ]</NavLink>
         </nav>
       </header>
       <main>

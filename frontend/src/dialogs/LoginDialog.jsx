@@ -34,7 +34,7 @@ export default function LoginDialog() {
   }
 
   return (
-    <Dialog identifier="loginDialog" name="Log in" show={true}>
+    <Dialog identifier="loginDialog" name="Log in">
       <div className="error">
         {data?.error && <code>{data.error}</code>}
       </div>
