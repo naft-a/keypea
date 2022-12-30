@@ -9,7 +9,6 @@ module Api
         scope "secrets"
 
         argument :user_id, type: :string, required: true
-        argument :password, type: :string, required: true
         argument :properties, ArgumentSets::Secret, required: true
 
         field :secret, type: Objects::Secret, include: true
@@ -24,19 +23,15 @@ module Api
         potential_error Errors::ValidationError
 
         def call
-          raise_error Errors::PasswordBlankError if request.arguments[:password].blank?
-
           encryption_key = EncryptionKey.where(user_id: request.arguments[:user_id]).first
           raise_error "EncryptionKeyNotFound" if encryption_key.blank?
-
-          Password.set(request.arguments[:password])
 
           secret = Secret.create!(
             user_id: request.arguments[:user_id],
             name: request.arguments[:properties][:name],
             description: request.arguments[:properties][:description],
             encryption_key: encryption_key,
-            parts: request.arguments[:properties][:parts]&.map { |part_attrs| Part.new(**part_attrs) } || []
+            parts: []
           )
 
           response.add_field :secret, secret
