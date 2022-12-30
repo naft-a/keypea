@@ -12,6 +12,8 @@ import Signup, { signupAction } from "./pages/Signup"
 import SecretsIndex, { secretsLoader } from "./pages/SecretsIndex"
 import SecretsShow, { secretLoader } from "./pages/SecretsShow"
 import PartsIndex, { partsLoader } from "./pages/PartsIndex"
+import PartsNew, { createPartAction } from "./pages/PartsNew"
+import SecretsNew, { createSecretAction } from "./pages/SecretsNew"
 
 const session = Session.initialize({
   token: null,
@@ -56,6 +58,11 @@ const appRouter = createBrowserRouter([
             loader: secretsLoader
           },
           {
+            path: "new",
+            element: <SecretsNew />,
+            action: createSecretAction
+          },
+          {
             path: ":id",
             element: <SecretsShow />,
             loader: secretLoader
@@ -63,7 +70,12 @@ const appRouter = createBrowserRouter([
           {
             path: ":id/parts",
             element: <PartsIndex />,
-            loader: partsLoader
+            loader: partsLoader,
+          },
+          {
+            path: ":id/parts/new",
+            element: <PartsNew />,
+            action: createPartAction
           }
         ],
       }

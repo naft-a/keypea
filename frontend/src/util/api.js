@@ -46,6 +46,48 @@ export async function getSecrets(token) {
   })
 }
 
+/**
+ * @param {String} id
+ * @param {String} token
+ * @return {Object}
+ */
+export async function getSecret(id, token) {
+  const secrets = await getSecrets(token)
+  if (secrets?.error) { return secrets }
+
+  return secrets.find((s) => { return s.id === id })
+}
+
+/**
+ * @param {String} id
+ * @param {String} token
+ * @param {Object} payload
+ * @return {Object}
+ */
+export async function updateSecret(id, token,payload) {
+  return await makeRequest({
+    path: `/secrets/${id}`,
+    method: "PATCH",
+    token: token,
+    body: JSON.stringify(payload)
+  })
+}
+
+/**
+ * @param {String} id
+ * @param {String} token
+ * @param {Object} payload
+ * @return {Object}
+ */
+export async function decryptParts(id, token, payload) {
+  return await makeRequest({
+    path: `/secrets/${id}/parts/decrypt`,
+    method: "POST",
+    token: token,
+    body: JSON.stringify(payload)
+  })
+}
+
 // private
 
 async function makeRequest({...params}) {

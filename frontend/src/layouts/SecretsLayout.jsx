@@ -1,15 +1,18 @@
-import {Link, matchRoutes, NavLink, Outlet, useLocation} from "react-router-dom"
-import {useEffect, useState} from "react";
+import {Link, matchRoutes, Outlet, useLocation, useParams} from "react-router-dom"
+import { useEffect, useState } from "react"
+import DecryptDialog from "../dialogs/DecryptDialog"
+import EditSecretDialog from "../dialogs/EditSecretDialog.jsx";
 
-export default function SecretsLayout({ params }) {
+export default function SecretsLayout() {
+  const params = useParams()
   const location = useLocation()
 
   const [currentPath, setCurrentPath] = useState("")
   const [isSecretPath, setIsSecretPath] = useState(false)
   const [isPartsPath, setIsPartsPath] = useState(false)
 
-  const secretRoute = [{ path: "/secrets/:id" }]
-  const partsRoute = [{ path: "/secrets/:id/parts"}]
+  const secretRoute = [{path: "/secrets/:id"}]
+  const partsRoute = [{path: "/secrets/:id/parts"}]
 
   useEffect(() => {
     const matchSecretRoute = matchRoutes(secretRoute, location)
@@ -20,27 +23,48 @@ export default function SecretsLayout({ params }) {
     setCurrentPath(location.pathname)
   }, [location])
 
-  const renderLinks = () => {
+  const render = (currentPath) => {
+    // SecretNew
+    if (currentPath === "/secrets/new") {
+      return (
+        <>
+          <Link to="/secrets">{"[ < Back ]"}</Link>
+        </>
+      )
+    }
+
+    // PartNew
+    if (currentPath === `/secrets/${params.id}/parts/new`) {
+      return (
+        <>
+          <Link to={`/secrets/${params.id}/parts`}>{"[ < Back ]"}</Link>
+        </>
+      )
+    }
+
+    // SecretShow
     if (isSecretPath) {
       return (
         <>
           <Link to="/secrets">{"[ < Back ]"}</Link>
-          <Link to={`${currentPath}/edit`}>[ Edit ]</Link>
+          <Link to="#" id="editSecretDialog">[ Edit ]</Link>
           <Link to={`${currentPath}/parts`}>[ Parts ]</Link>
         </>
       )
     }
 
+    // PartShow
     if (isPartsPath) {
       return (
         <>
-          <Link to={currentPath.substring(0, currentPath.lastIndexOf('/'))}>{"[ < Back ]"}</Link>
+          <Link to={`/secrets/${params.id}`}>{"[ < Back ]"}</Link>
           <Link to={`${currentPath}/new`} hidden={isSecretPath}>[ New ]</Link>
-          <Link to={`${currentPath}/decrypt`} id="decryptDialog" title="Decrypt">🔓</Link>
+          <Link to="#" id="decryptDialog" title="Decrypt">🔓</Link>
         </>
       )
     }
 
+    // SecretIndex
     return (
       <>
         <Link to="/secrets/new" hidden={isSecretPath}>[ New ]</Link>
@@ -52,10 +76,13 @@ export default function SecretsLayout({ params }) {
     <div>
       <nav>
         <hr></hr>
-        {renderLinks()}
+        {render(currentPath)}
       </nav>
 
       <Outlet />
+
+      {isPartsPath && <DecryptDialog secretId={params.id} returnPath={`/secrets/${params.id}/parts`} />}
+      {isSecretPath && <EditSecretDialog secretId={params.id} />}
     </div>
   )
 }

@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react"
+import { useEffect, useRef } from "react"
 
 export default function Dialog({children, ...props}) {
   const dialog = useRef(null)
@@ -17,7 +17,8 @@ export default function Dialog({children, ...props}) {
     if (props.show) { openDialog() }
 
     const triggerElement = document.querySelector(`#${props.identifier}`)
-    triggerElement.addEventListener("click", openDialog)
+    triggerElement?.addEventListener("click", openDialog)
+
     const closeDialogOnEscape = (event) => {
       if (event.key === "Escape") {
         closeDialog()
@@ -26,7 +27,7 @@ export default function Dialog({children, ...props}) {
 
     document.addEventListener("keydown", closeDialogOnEscape, false)
     return () => {
-      triggerElement.removeEventListener("click", openDialog)
+      triggerElement?.removeEventListener("click", openDialog)
       document.removeEventListener("keydown", closeDialogOnEscape, false)
     };
   }, [])

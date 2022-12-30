@@ -1,9 +1,10 @@
 import { useState, useEffect } from "react";
-import { Outlet, NavLink, Link } from "react-router-dom"
-import LoginDialog from "../dialogs/LoginDialog.jsx";
+import { Outlet, NavLink, Link, useLocation } from "react-router-dom"
+import LoginDialog from "../dialogs/LoginDialog"
 import Logo from "../assets/pea.svg"
 
 export default function MainLayout() {
+  const location = useLocation()
   const [authenticated, setAuthenticated] = useState(false)
 
   useEffect(() => {
@@ -32,7 +33,7 @@ export default function MainLayout() {
       <main>
         <Outlet />
 
-        <LoginDialog show={!authenticated} />
+        <LoginDialog show={!authenticated} returnPath={location.pathname}/>
       </main>
     </>
   )

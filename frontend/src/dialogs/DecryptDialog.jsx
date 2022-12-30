@@ -1,22 +1,21 @@
 import Dialog from "../components/Dialog.jsx"
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
-import { authenticateUser } from "../util/api"
+import { decryptParts } from "../util/api"
 
-export default function LoginDialog({ show, returnPath }) {
-  const [data, setData] = useState({})
+export default function DecryptDialog({ secretId, returnPath }) {
+  const [data, setData] = useState([])
   const navigate = useNavigate()
 
   const formSubmit = async (event) => {
     event.preventDefault()
 
     const payload = {
-      username: event.target.username.value,
       password: event.target.password.value
     }
 
-    const data = await authenticateUser(payload)
-    setData(data)
+    const responseData = await decryptParts(secretId, session.token, payload)
+    setData(responseData)
 
     if (data.error) {
       event.target.password.value = ""
@@ -24,27 +23,21 @@ export default function LoginDialog({ show, returnPath }) {
       return
     }
 
-    session.token = data.access_token
-    session.dispatchAuthenticated(true)
-
-    event.target.username.value = ""
     event.target.password.value = ""
     event.target.parentElement.close()
 
-    navigate(returnPath)
+    navigate(returnPath, {state: {parts: responseData}})
   }
 
   return (
-    <Dialog identifier="loginDialog" name="Log in" show={show}>
+    <Dialog identifier="decryptDialog" name="Decrypt parts">
       <div className="error">
         {data?.error && <code>{data.error}</code>}
       </div>
       <form method="post" onSubmit={formSubmit}>
-        <label>Username</label>
-        <input name="username" required={true} />
         <label>Password</label>
         <input name="password" type="password" required={true}/>
-        <input name="submit" type="submit" value="Login" />
+        <input name="submit" type="submit" value="Decrypts" />
       </form>
     </Dialog>
   )
