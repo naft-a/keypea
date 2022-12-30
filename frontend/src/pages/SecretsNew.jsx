@@ -31,7 +31,7 @@ export default function SecretsNew() {
   const button = useRef(null)
 
   useEffect(() => {
-    console.log(password)
+    if (password) { form.current.requestSubmit() }
   }, [password])
 
   const handleNext = (event) => {
@@ -53,12 +53,12 @@ export default function SecretsNew() {
       </div>
       {secret && secret.error && <code>{secret.error}</code>}
       <Form ref={form} method="post" action="/secrets/new">
-        <input type="hidden" value={password}/>
+        <input name="password" type="hidden" value={password}/>
         <label>Name</label>
         <input name="name" placeholder="e.g Ubuntu host keypair" required={true} value={name} onChange={(e) => { setName(e.target.value) }} />
         <label>Description</label>
         <textarea name="description" placeholder="The one at 127.0.0.1" value={description} onChange={(e) => { setDescription(e.target.value) }} />
-        <button type="button" onClick={handleNext}>Next</button>
+        <button type="button" onClick={handleNext}>Create</button>
       </Form>
 
       {showDialog &&

@@ -7,10 +7,9 @@ export default function PasswordDialog({ isOpen, setIsOpen, setPassword }) {
     event.preventDefault()
 
     setPassword(event.target.password.value)
-
-    event.target.parentElement.close()
-    event.target.password.value = ""
     setIsOpen(false)
+
+    event.target.password.value = ""
   }
 
   return (

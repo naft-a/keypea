@@ -62,7 +62,7 @@ export default function SecretsLayout() {
         <>
           <Link to={`/secrets/${params.id}`}>{"[ < Back ]"}</Link>
           <Link to={`${currentPath}/new`} hidden={isSecretPath}>[ New ]</Link>
-          <Link to="#" onClick={() => { setShowDecryptDialog(true) }} title="Decrypt">🔓</Link>
+          <Link to="#" onClick={() => { setShowDecryptDialog(true) }} title="Decrypt">[ Decrypt ]</Link>
         </>
       )
     }
