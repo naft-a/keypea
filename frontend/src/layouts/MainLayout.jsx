@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import {useState, useEffect, useRef} from "react";
 import { Outlet, NavLink, Link, useLocation } from "react-router-dom"
 import LoginDialog from "../dialogs/LoginDialog"
 import Logo from "../assets/pea.svg"
@@ -6,6 +6,7 @@ import Logo from "../assets/pea.svg"
 export default function MainLayout() {
   const location = useLocation()
   const [authenticated, setAuthenticated] = useState(false)
+  const [showDialog, setShowDialog] = useState(!authenticated)
 
   useEffect(() => {
     self.addEventListener("authenticated", (event) => { setAuthenticated(event.detail) })
@@ -24,7 +25,7 @@ export default function MainLayout() {
         </div>
         <nav>
           <NavLink to="/">[ Home ]</NavLink>
-          <Link to="#" id="loginDialog" hidden={authenticated}>[ Login ]</Link>
+          <Link to="#" onClick={() => { setShowDialog(true) }} hidden={authenticated}>[ Login ]</Link>
           <NavLink to="/signup" hidden={authenticated}>[ Signup ]</NavLink>
           <NavLink to="/secrets" hidden={!authenticated}>[ Secrets ]</NavLink>
           <NavLink to="/logout" hidden={!authenticated}>[ Logout ]</NavLink>
@@ -33,7 +34,11 @@ export default function MainLayout() {
       <main>
         <Outlet />
 
-        <LoginDialog show={!authenticated} returnPath={location.pathname}/>
+        {showDialog &&
+          <LoginDialog
+            isOpen={showDialog}
+            setIsOpen={setShowDialog}
+            returnPath={location.pathname}/>}
       </main>
     </>
   )

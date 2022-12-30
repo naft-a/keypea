@@ -1,9 +1,9 @@
 import Dialog from "../components/Dialog.jsx"
-import { useState } from "react"
+import {useEffect, useState} from "react"
 import { useNavigate } from "react-router-dom"
 import { authenticateUser } from "../util/api"
 
-export default function LoginDialog({ show, returnPath }) {
+export default function LoginDialog({ isOpen, setIsOpen, returnPath }) {
   const [data, setData] = useState({})
   const navigate = useNavigate()
 
@@ -29,13 +29,14 @@ export default function LoginDialog({ show, returnPath }) {
 
     event.target.username.value = ""
     event.target.password.value = ""
-    event.target.parentElement.close()
+
+    setIsOpen(false)
 
     navigate(returnPath)
   }
 
   return (
-    <Dialog identifier="loginDialog" name="Log in" show={show}>
+    <Dialog title="Log in" isOpen={isOpen} onClose={() => { setIsOpen(false) }}>
       <div className="error">
         {data?.error && <code>{data.error}</code>}
       </div>

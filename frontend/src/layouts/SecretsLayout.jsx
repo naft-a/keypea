@@ -1,11 +1,14 @@
 import {Link, matchRoutes, Outlet, useLocation, useParams} from "react-router-dom"
-import { useEffect, useState } from "react"
+import { useEffect, useState, useRef } from "react"
 import DecryptDialog from "../dialogs/DecryptDialog"
 import EditSecretDialog from "../dialogs/EditSecretDialog.jsx";
 
 export default function SecretsLayout() {
   const params = useParams()
   const location = useLocation()
+
+  const [showEditDialog, setShowEditDialog] = useState(false)
+  const [showDecryptDialog, setShowDecryptDialog] = useState(false)
 
   const [currentPath, setCurrentPath] = useState("")
   const [isSecretPath, setIsSecretPath] = useState(false)
@@ -47,7 +50,7 @@ export default function SecretsLayout() {
       return (
         <>
           <Link to="/secrets">{"[ < Back ]"}</Link>
-          <Link to="#" id="editSecretDialog">[ Edit ]</Link>
+          <Link to="#" onClick={() => { setShowEditDialog(true) }}>[ Edit ]</Link>
           <Link to={`${currentPath}/parts`}>[ Parts ]</Link>
         </>
       )
@@ -59,7 +62,7 @@ export default function SecretsLayout() {
         <>
           <Link to={`/secrets/${params.id}`}>{"[ < Back ]"}</Link>
           <Link to={`${currentPath}/new`} hidden={isSecretPath}>[ New ]</Link>
-          <Link to="#" id="decryptDialog" title="Decrypt">🔓</Link>
+          <Link to="#" onClick={() => { setShowDecryptDialog(true) }} title="Decrypt">🔓</Link>
         </>
       )
     }
@@ -81,8 +84,18 @@ export default function SecretsLayout() {
 
       <Outlet />
 
-      {isPartsPath && <DecryptDialog secretId={params.id} returnPath={`/secrets/${params.id}/parts`} />}
-      {isSecretPath && <EditSecretDialog secretId={params.id} />}
+      {(isPartsPath && showDecryptDialog) &&
+        <DecryptDialog
+          isOpen={showDecryptDialog}
+          setIsOpen={setShowDecryptDialog}
+          secretId={params.id}
+          returnPath={`/secrets/${params.id}/parts`} />}
+
+      {(isSecretPath && showEditDialog) &&
+        <EditSecretDialog
+          isOpen={showEditDialog}
+          setIsOpen={setShowEditDialog}
+          secretId={params.id} />}
     </div>
   )
 }

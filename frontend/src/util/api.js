@@ -59,6 +59,20 @@ export async function getSecret(id, token) {
 }
 
 /**
+ * @param {String} token
+ * @param {Object} payload
+ * @return {Object}
+ */
+export async function createSecret(token, payload) {
+  return await makeRequest({
+    path: "/secrets",
+    method: "POST",
+    token: token,
+    body: JSON.stringify(payload)
+  })
+}
+
+/**
  * @param {String} id
  * @param {String} token
  * @param {Object} payload

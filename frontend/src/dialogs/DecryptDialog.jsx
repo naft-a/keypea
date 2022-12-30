@@ -3,7 +3,7 @@ import { useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { decryptParts } from "../util/api"
 
-export default function DecryptDialog({ secretId, returnPath }) {
+export default function DecryptDialog({ isOpen, setIsOpen, secretId, returnPath }) {
   const [data, setData] = useState([])
   const navigate = useNavigate()
 
@@ -24,13 +24,14 @@ export default function DecryptDialog({ secretId, returnPath }) {
     }
 
     event.target.password.value = ""
-    event.target.parentElement.close()
+
+    setIsOpen(false)
 
     navigate(returnPath, {state: {parts: responseData}})
   }
 
   return (
-    <Dialog identifier="decryptDialog" name="Decrypt parts">
+    <Dialog title="Decrypt parts" isOpen={isOpen} onClose={() => { setIsOpen(false) }}>
       <div className="error">
         {data?.error && <code>{data.error}</code>}
       </div>

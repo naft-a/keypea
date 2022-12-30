@@ -37,33 +37,33 @@ nav a.active {
   background-color: rgba(255, 36, 36, 0.47);
 }
 
-#dialog header {
+dialog header {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
 }
 
-#dialog header div {
+dialog header div {
   margin-top: auto;
   margin-bottom: auto;
   margin-left: 0.5rem;
 }
 
 
-#dialog .error {
+dialog .error {
   margin-top: 1rem;
   margin-bottom: 1rem;
 }
 
-#dialog .error code {
+dialog .error code {
   color: red;
 }
 
-#dialog button {
+dialog button {
   padding: 0.5rem;
 }
 
-#dialog button:after {
+dialog button:after {
   content: "❌";
 }
 

@@ -3,7 +3,7 @@ import { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
 import {getSecret, getSecrets, updateSecret} from "../util/api"
 
-export default function EditSecretDialog({ secretId }) {
+export default function EditSecretDialog({ isOpen, setIsOpen, secretId }) {
   const navigate = useNavigate()
 
   const [response, setResponse] = useState(null)
@@ -12,10 +12,11 @@ export default function EditSecretDialog({ secretId }) {
 
   useEffect(() => {
     const fetchData = async (id, token) => {
-      const { name, description } =  await getSecret(id, token)
+      const secret = await getSecret(id, token)
+      if (!secret) { return }
 
-      setName(name)
-      setDescription(description)
+      setName(secret.name)
+      setDescription(secret.description)
     }
 
     fetchData(secretId, session.token).catch(console.error)
@@ -34,13 +35,14 @@ export default function EditSecretDialog({ secretId }) {
 
     event.target.name.value = ""
     event.target.description.value = ""
-    event.target.parentElement.close()
+
+    setIsOpen(false)
 
     navigate(`/secrets/${secretId}`)
   }
 
   return (
-    <Dialog identifier="editSecretDialog" name="Edit">
+    <Dialog title="Edit" isOpen={isOpen} onClose={() => { setIsOpen(false) }}>
       <div className="error">
         {response?.error && <code>{response.error}</code>}
       </div>
@@ -48,7 +50,7 @@ export default function EditSecretDialog({ secretId }) {
         <label>Name</label>
         <input name="name" required={true} value={name} onChange={(e) => { setName(e.target.value) }} />
         <label>Description</label>
-        <textarea name="description" required={true} value={description} onChange={(e) => { setDescription(e.target.value) }} />
+        <textarea name="description" value={description} onChange={(e) => { setDescription(e.target.value) }} />
         <input name="submit" type="submit" value="Update" />
       </form>
     </Dialog>
