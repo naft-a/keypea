@@ -17,6 +17,7 @@ module Gateway
         def handle(request, response)
           part = Services::SecretsService::CreateSecretsParts.new(
             secret_id: request.params[:secret_id],
+            username: Current.username,
             password: request.params[:password],
             key: request.params[:part][:key],
             value: request.params[:part][:value]

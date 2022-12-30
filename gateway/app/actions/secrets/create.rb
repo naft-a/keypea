@@ -8,17 +8,13 @@ module Gateway
         params do
           required(:name).filled(:string)
           required(:description).filled(:string)
-          required(:password).filled(:string)
         end
 
         def handle(request, response)
           secret = Services::SecretsService::Create.new(
             user_id: Current.user_id,
-            username: Current.username,
-            password: request.params[:password],
             name: request.params[:name],
             description: request.params[:description],
-            parts: []
           ).call
 
           response.body = secret.to_hash.to_json
