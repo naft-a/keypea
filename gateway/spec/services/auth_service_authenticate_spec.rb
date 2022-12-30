@@ -18,7 +18,7 @@ RSpec.describe Authenticate, type: :service do
           "user" => {
             "id" => "user-id",
             "username" => "username",
-            "password" => "password",
+            "access_token" => "password",
             "created_at" => 1671010507,
             "updated_at" => 1671010507
           }

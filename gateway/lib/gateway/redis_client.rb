@@ -18,10 +18,14 @@ module Gateway
       end
 
       def get(key)
+        return unless key
+
         client.get(key)
       end
 
       def del(key)
+        return unless key
+
         client.del(key)
       end
 

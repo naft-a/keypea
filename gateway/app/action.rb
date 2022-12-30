@@ -45,6 +45,7 @@ module Gateway
       halt 401 unless access_token
 
       user_id = access_token[:id]
+      username = access_token[:username]
       halt 401 if user_id.blank?
 
       # next if the token is expired refresh it
@@ -55,6 +56,7 @@ module Gateway
 
       # set the session and we're good to go
       Current.user_id = user_id
+      Current.username = username
       Current.access_token = access_token
     end
 
@@ -62,7 +64,7 @@ module Gateway
       remote_addr = request.env["REMOTE_ADDR"]
       user_agent = request.env["HTTP_USER_AGENT"]
 
-      access_token = JSONWebToken.encode({id: user.id})
+      access_token = JSONWebToken.encode({id: user.id, username: user.username})
       refresh_token = JSONWebToken.encode(
         {
           id: user.id,

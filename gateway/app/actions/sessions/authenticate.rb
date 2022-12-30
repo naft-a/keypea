@@ -28,7 +28,7 @@ module Gateway
         end
 
         def handle_authenticate_exception(_exception, response)
-          response.status = 401
+          response.status = 200
           response.format = :json
           response.body = {error: "Invalid username or password"}.to_json
         end
