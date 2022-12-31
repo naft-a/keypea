@@ -3,6 +3,12 @@ import { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
 import {getSecret, getSecrets, updateSecret} from "../util/api"
 
+/**
+ * @param {Boolean} isOpen
+ * @param {Function} setIsOpen
+ * @param {String} secretId
+ * @return {JSX.Element}
+ */
 export default function EditSecretDialog({ isOpen, setIsOpen, secretId }) {
   const navigate = useNavigate()
 

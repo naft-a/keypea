@@ -1,6 +1,12 @@
 import Dialog from "../components/Dialog.jsx"
 import {useEffect, useState} from "react";
 
+/**
+ * @param {Boolean} isOpen
+ * @param {Function} setIsOpen
+ * @param {Function} setPassword
+ * @return {JSX.Element}
+ */
 export default function PasswordDialog({ isOpen, setIsOpen, setPassword }) {
 
   const formSubmit = async (event) => {

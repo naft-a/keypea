@@ -93,6 +93,21 @@ export async function updateSecret(id, token,payload) {
  * @param {Object} payload
  * @return {Object}
  */
+export async function createSecretParts(id, token, payload) {
+  return await makeRequest({
+    path: `/secrets/${id}/parts`,
+    method: "POST",
+    token: token,
+    body: JSON.stringify(payload)
+  })
+}
+
+/**
+ * @param {String} id
+ * @param {String} token
+ * @param {Object} payload
+ * @return {Object}
+ */
 export async function decryptParts(id, token, payload) {
   return await makeRequest({
     path: `/secrets/${id}/parts/decrypt`,
@@ -119,7 +134,7 @@ async function makeRequest({...params}) {
       return new Promise((resolve, reject) => {
         if (response.status === 401) {
           session.token = null
-          session.dispatchAuthenticated(false)
+          session.dispatchUnauthenticated()
 
           reject("Unauthenticated user")
         } else {

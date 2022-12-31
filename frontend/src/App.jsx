@@ -12,14 +12,16 @@ import Signup, { signupAction } from "./pages/Signup"
 import SecretsIndex, { secretsLoader } from "./pages/SecretsIndex"
 import SecretsShow, { secretLoader } from "./pages/SecretsShow"
 import PartsIndex, { partsLoader } from "./pages/PartsIndex"
-import PartsNew, { createPartAction } from "./pages/PartsNew"
-import SecretsNew, { createSecretAction } from "./pages/SecretsNew"
+import PartsNew, { partsNewAction, partsNewLoader } from "./pages/PartsNew"
+import SecretsNew, { secretsNewAction, secretsNewLoader } from "./pages/SecretsNew"
 
 const session = Session.initialize({
   token: null,
-  dispatchAuthenticated: (param) => {
-    const event = new CustomEvent("authenticated", {detail: param})
-    self.dispatchEvent(event)
+  dispatchAuthenticated: () => {
+    self.dispatchEvent(new Event("authenticated"))
+  },
+  dispatchUnauthenticated: () => {
+    self.dispatchEvent(new Event("unauthenticated"))
   }
 })
 
@@ -43,7 +45,7 @@ const appRouter = createBrowserRouter([
           await logoutUser(session.token)
 
           session.token = null
-          session.dispatchAuthenticated(false)
+          session.dispatchUnauthenticated()
 
           return redirect("/")
         },
@@ -60,7 +62,8 @@ const appRouter = createBrowserRouter([
           {
             path: "new",
             element: <SecretsNew />,
-            action: createSecretAction
+            loader: secretsNewLoader,
+            action: secretsNewAction
           },
           {
             path: ":id",
@@ -75,7 +78,8 @@ const appRouter = createBrowserRouter([
           {
             path: ":id/parts/new",
             element: <PartsNew />,
-            action: createPartAction
+            loader: partsNewLoader,
+            action: partsNewAction
           }
         ],
       }

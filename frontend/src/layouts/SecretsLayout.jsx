@@ -1,11 +1,13 @@
-import {Link, matchRoutes, Outlet, useLocation, useParams} from "react-router-dom"
-import { useEffect, useState, useRef } from "react"
+import { useEffect, useState } from "react"
+import { Link, matchRoutes, Outlet, useLocation, useParams } from "react-router-dom"
+import { useAuthenticated } from "../util/hooks"
 import DecryptDialog from "../dialogs/DecryptDialog"
-import EditSecretDialog from "../dialogs/EditSecretDialog.jsx";
+import EditSecretDialog from "../dialogs/EditSecretDialog.jsx"
 
 export default function SecretsLayout() {
   const params = useParams()
   const location = useLocation()
+  const authenticated = useAuthenticated()
 
   const [showEditDialog, setShowEditDialog] = useState(false)
   const [showDecryptDialog, setShowDecryptDialog] = useState(false)
@@ -79,7 +81,8 @@ export default function SecretsLayout() {
     <div>
       <nav>
         <hr></hr>
-        {render(currentPath)}
+        {authenticated &&
+          render(currentPath)}
       </nav>
 
       <Outlet />

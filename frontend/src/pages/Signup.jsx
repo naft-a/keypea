@@ -14,7 +14,7 @@ export async function signupAction({ request }) {
     return data
   } else {
     session.token = data.access_token
-    session.dispatchAuthenticated(true)
+    session.dispatchAuthenticated()
 
     return redirect("/secrets")
   }
@@ -33,8 +33,8 @@ export default function Signup() {
       <h3>Sign up!</h3>
       <div>
         <p>
-          Use the desired username and secure password combination here, also make sure you know your password because
-          you'll be typing it a lot.
+          Use a secure username and password combination here, also make sure you know your password because
+          if you lose your password all data will be lost forever.
         </p>
       </div>
       {data && data.error && <code>{data.error}</code>}

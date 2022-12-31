@@ -1,5 +1,12 @@
-import {useEffect, useRef, useState} from "react"
+import { useEffect, useRef } from "react"
 
+/**
+ * @param {React.Component} children
+ * @param {String} title
+ * @param {Boolean} isOpen
+ * @param {ReactEventHandler<HTMLDialogElement> | undefined} onClose
+ * @return {JSX.Element}
+ */
 export default function Dialog({children, title, isOpen, onClose }) {
   const dialog = useRef(null)
 

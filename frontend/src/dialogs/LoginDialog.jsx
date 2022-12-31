@@ -3,6 +3,12 @@ import {useEffect, useState} from "react"
 import { useNavigate } from "react-router-dom"
 import { authenticateUser } from "../util/api"
 
+/**
+ * @param {Boolean} isOpen
+ * @param {Function} setIsOpen
+ * @param {String} returnPath
+ * @return {JSX.Element}
+ */
 export default function LoginDialog({ isOpen, setIsOpen, returnPath }) {
   const [data, setData] = useState({})
   const navigate = useNavigate()
@@ -25,7 +31,7 @@ export default function LoginDialog({ isOpen, setIsOpen, returnPath }) {
     }
 
     session.token = data.access_token
-    session.dispatchAuthenticated(true)
+    session.dispatchAuthenticated()
 
     event.target.username.value = ""
     event.target.password.value = ""

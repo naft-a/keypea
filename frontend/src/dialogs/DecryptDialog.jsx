@@ -3,6 +3,13 @@ import { useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { decryptParts } from "../util/api"
 
+/**
+ * @param {Boolean} isOpen
+ * @param {Function} setIsOpen
+ * @param {String} secretId
+ * @param {String} returnPath
+ * @return {JSX.Element}
+ */
 export default function DecryptDialog({ isOpen, setIsOpen, secretId, returnPath }) {
   const [data, setData] = useState([])
   const navigate = useNavigate()

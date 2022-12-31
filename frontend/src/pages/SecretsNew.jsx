@@ -1,14 +1,18 @@
-import {useEffect, useRef, useState} from "react"
-import {Form, redirect, useActionData} from "react-router-dom"
-import { createSecret } from "../util/api.js"
-import PasswordDialog from "../dialogs/PasswordDialog"
+import { useRef, useState } from "react"
+import { Form, redirect, useActionData } from "react-router-dom"
+import { createSecret } from "../util/api"
 
-export async function createSecretAction({ request }) {
+export async function secretsNewLoader() {
+  if (!session.token) { return redirect("/") }
+
+  return null
+}
+
+export async function secretsNewAction({ request }) {
   const formData = await request.formData()
   const payload = {
     name: formData.get("name"),
-    description: formData.get("description"),
-    password: formData.get("password")
+    description: formData.get("description")
   }
 
   const data = await createSecret(session.token, payload)
@@ -21,26 +25,10 @@ export async function createSecretAction({ request }) {
 
 export default function SecretsNew() {
   const form = useRef()
-  const [showDialog, setShowDialog] = useState(false)
 
-  const [password, setPassword] = useState("")
   const [name, setName] = useState("")
   const [description, setDescription] = useState("")
   const secret = useActionData()
-
-  const button = useRef(null)
-
-  useEffect(() => {
-    if (password) { form.current.requestSubmit() }
-  }, [password])
-
-  const handleNext = (event) => {
-    event.preventDefault()
-
-    if (form.current.reportValidity()) {
-      setShowDialog(true)
-    }
-  }
 
   return (
     <section id="content">
@@ -52,20 +40,13 @@ export default function SecretsNew() {
         </p>
       </div>
       {secret && secret.error && <code>{secret.error}</code>}
-      <Form ref={form} method="post" action="/secrets/new">
-        <input name="password" type="hidden" value={password}/>
+      <Form ref={form} method="post" action={window.location.pathname}>
         <label>Name</label>
         <input name="name" placeholder="e.g Ubuntu host keypair" required={true} value={name} onChange={(e) => { setName(e.target.value) }} />
         <label>Description</label>
         <textarea name="description" placeholder="The one at 127.0.0.1" value={description} onChange={(e) => { setDescription(e.target.value) }} />
-        <button type="button" onClick={handleNext}>Create</button>
+        <input type="submit" value="Create" />
       </Form>
-
-      {showDialog &&
-        <PasswordDialog
-          isOpen={showDialog}
-          setIsOpen={setShowDialog}
-          setPassword={setPassword}/>}
     </section>
   )
 }

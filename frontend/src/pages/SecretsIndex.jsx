@@ -36,7 +36,9 @@ export default function SecretsIndex() {
         {secrets && secrets.map(secret => (
           <li key={secret.id}>
             <pre>
-              <Link to={secret.id}>{secret.name}</Link>
+              <strong>
+                <Link to={secret.id}>{secret.name}</Link>
+              </strong>
               <p>{secret.description}</p>
             </pre>
           </li>

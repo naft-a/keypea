@@ -1,6 +1,6 @@
-import {redirect, useLoaderData, useLocation} from "react-router-dom"
+import { redirect, useLoaderData, useLocation } from "react-router-dom"
 import { useEffect, useState } from "react"
-import {getSecret} from "../util/api.js";
+import { getSecret } from "../util/api"
 
 export async function partsLoader({ params }) {
   if (!session.token) { return redirect("/") }
