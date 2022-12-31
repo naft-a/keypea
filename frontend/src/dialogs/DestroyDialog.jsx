@@ -23,7 +23,7 @@ export default function DestroyDialog({ isOpen, setIsOpen, secretId }) {
     if (!confirmedOnce) {
       setConfirmedOnce(true)
     } else {
-      await deleteSecret(secretId, session.token)
+      await deleteSecret(secretId)
       setIsOpen(false)
 
       navigate("/secrets")

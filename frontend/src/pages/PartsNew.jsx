@@ -20,7 +20,7 @@ export async function partsNewAction({ request }) {
     }
   }
 
-  const data = await createSecretParts(secretId, session.token, payload)
+  const data = await createSecretParts(secretId, payload)
   if (data.error) {
     return data
   } else {

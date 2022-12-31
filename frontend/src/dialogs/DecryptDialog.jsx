@@ -21,7 +21,7 @@ export default function DecryptDialog({ isOpen, setIsOpen, secretId, returnPath 
       password: event.target.password.value
     }
 
-    const responseData = await decryptParts(secretId, session.token, payload)
+    const responseData = await decryptParts(secretId, payload)
     setData(responseData)
 
     if (data.error) {

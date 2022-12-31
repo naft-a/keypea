@@ -23,109 +23,101 @@ export async function authenticateUser(payload) {
 }
 
 /**
- * @param {String} token
  * @return {Object}
  */
-export async function logoutUser(token) {
+export async function logoutUser() {
   return await makeRequest({
     path: "/sessions/logout",
     method: "DELETE",
-    token: token
+    token: session.token
   })
 }
 
 /**
- * @param {String} token
  * @return {Object}
  */
-export async function getSecrets(token) {
+export async function getSecrets() {
   return await makeRequest({
     path: "/secrets",
     method: "GET",
-    token: token,
+    token: session.token,
   })
 }
 
 /**
  * @param {String} id
- * @param {String} token
  * @return {Object}
  */
-export async function getSecret(id, token) {
-  const secrets = await getSecrets(token)
+export async function getSecret(id) {
+  const secrets = await getSecrets()
   if (secrets?.error) { return secrets }
 
   return secrets.find((s) => { return s.id === id })
 }
 
 /**
- * @param {String} token
  * @param {Object} payload
  * @return {Object}
  */
-export async function createSecret(token, payload) {
+export async function createSecret(payload) {
   return await makeRequest({
     path: "/secrets",
     method: "POST",
-    token: token,
+    token: session.token,
     body: JSON.stringify(payload)
   })
 }
 
 /**
  * @param {String} id
- * @param {String} token
  * @param {Object} payload
  * @return {Object}
  */
-export async function updateSecret(id, token,payload) {
+export async function updateSecret(id,payload) {
   return await makeRequest({
     path: `/secrets/${id}`,
     method: "PATCH",
-    token: token,
+    token: session.token,
     body: JSON.stringify(payload)
   })
 }
 
 /**
  * @param {String} id
- * @param {String} token
  * @return {Object}
  */
-export async function deleteSecret(id, token) {
+export async function deleteSecret(id) {
   return await makeRequest({
     path: `/secrets/${id}`,
     method: "DELETE",
-    token: token,
+    token: session.token,
   })
 }
 
 /**
  * @param {String} id
- * @param {String} token
  * @param {Object} payload
  * @return {Object}
  */
-export async function createSecretParts(id, token, payload) {
+export async function createSecretParts(id, payload) {
   return await makeRequest({
     path: `/secrets/${id}/parts`,
     method: "POST",
-    token: token,
+    token: session.token,
     body: JSON.stringify(payload)
   })
 }
 
 /**
  * @param {String} id
- * @param {String} token
  * @param {Object} payload
  * @return {Object}
  */
-export async function decryptParts(id, token, payload) {
+export async function decryptParts(id, payload) {
   return await makeRequest({
     path: `/secrets/${id}/parts/decrypt`,
     method: "POST",
-    token: token,
+    token: session.token,
     body: JSON.stringify(payload)
   })
 }

@@ -4,7 +4,7 @@ import { getSecrets } from "../util/api"
 export async function secretsLoader() {
   if (!session.token) { return {error: "Not authenticated"} }
 
-  const fetchedSecrets = await getSecrets(session.token)
+  const fetchedSecrets = await getSecrets()
   if (fetchedSecrets) {
     return fetchedSecrets
   } else {

@@ -15,7 +15,7 @@ export async function secretsNewAction({ request }) {
     description: formData.get("description")
   }
 
-  const data = await createSecret(session.token, payload)
+  const data = await createSecret(payload)
   if (data.error) {
     return data
   } else {

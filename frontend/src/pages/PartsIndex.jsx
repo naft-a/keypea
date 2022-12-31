@@ -7,7 +7,7 @@ export async function partsLoader({ params }) {
 
   const { id } = params
 
-  const fetchedSecret = await getSecret(id, session.token)
+  const fetchedSecret = await getSecret(id)
   if (fetchedSecret) {
     return fetchedSecret.parts
   } else {

@@ -17,15 +17,15 @@ export default function EditSecretDialog({ isOpen, setIsOpen, secretId }) {
   const [description, setDescription] = useState("")
 
   useEffect(() => {
-    const fetchData = async (id, token) => {
-      const secret = await getSecret(id, token)
+    const fetchData = async (id) => {
+      const secret = await getSecret(id)
       if (!secret) { return }
 
       setName(secret.name)
       setDescription(secret.description)
     }
 
-    fetchData(secretId, session.token).catch(console.error)
+    fetchData(secretId).catch(console.error)
   }, [])
 
   const formSubmit = async (event) => {
@@ -36,7 +36,7 @@ export default function EditSecretDialog({ isOpen, setIsOpen, secretId }) {
       description: event.target.description.value
     }
 
-    const response = await updateSecret(secretId, session.token, payload)
+    const response = await updateSecret(secretId, payload)
     setResponse(response)
 
     event.target.name.value = ""
