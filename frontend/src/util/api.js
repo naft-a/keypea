@@ -90,6 +90,19 @@ export async function updateSecret(id, token,payload) {
 /**
  * @param {String} id
  * @param {String} token
+ * @return {Object}
+ */
+export async function deleteSecret(id, token) {
+  return await makeRequest({
+    path: `/secrets/${id}`,
+    method: "DELETE",
+    token: token,
+  })
+}
+
+/**
+ * @param {String} id
+ * @param {String} token
  * @param {Object} payload
  * @return {Object}
  */

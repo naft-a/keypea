@@ -37,7 +37,7 @@ export default function MainLayout() {
           <LoginDialog
             isOpen={showDialog}
             setIsOpen={setShowDialog}
-            returnPath={"/secrets"}/>}
+            returnPath={location.pathname === "/signup" ? "/secrets" : location.pathname}/>}
       </main>
     </>
   )

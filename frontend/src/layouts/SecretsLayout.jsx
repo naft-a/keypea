@@ -3,6 +3,7 @@ import { Link, matchRoutes, Outlet, useLocation, useParams } from "react-router-
 import { useAuthenticated } from "../util/hooks"
 import DecryptDialog from "../dialogs/DecryptDialog"
 import EditSecretDialog from "../dialogs/EditSecretDialog.jsx"
+import DestroyDialog from "../dialogs/DestroyDialog"
 
 export default function SecretsLayout() {
   const params = useParams()
@@ -11,6 +12,7 @@ export default function SecretsLayout() {
 
   const [showEditDialog, setShowEditDialog] = useState(false)
   const [showDecryptDialog, setShowDecryptDialog] = useState(false)
+  const [showDestroyDialog, setShowDestroyDialog] = useState(false)
 
   const [currentPath, setCurrentPath] = useState("")
   const [isSecretPath, setIsSecretPath] = useState(false)
@@ -54,6 +56,7 @@ export default function SecretsLayout() {
           <Link to="/secrets">{"[ < Back ]"}</Link>
           <Link to="#" onClick={() => { setShowEditDialog(true) }}>[ Edit ]</Link>
           <Link to={`${currentPath}/parts`}>[ Parts ]</Link>
+          <Link to="#" onClick={() => { setShowDestroyDialog(true) }} style={{float: "right"}}>[ Destroy ]</Link>
         </>
       )
     }
@@ -98,6 +101,12 @@ export default function SecretsLayout() {
         <EditSecretDialog
           isOpen={showEditDialog}
           setIsOpen={setShowEditDialog}
+          secretId={params.id} />}
+
+      {(isSecretPath && showDestroyDialog) &&
+        <DestroyDialog
+          isOpen={showDestroyDialog}
+          setIsOpen={setShowDestroyDialog}
           secretId={params.id} />}
     </div>
   )
