@@ -70,7 +70,7 @@ export default function PartsIndex() {
               <pre>
                 {JSON.stringify(formatPart(part), undefined, 2)}
               </pre>
-              <a href="#" onClick={setButtonProps} data-part-id={part.id}>[ Destroy ]</a>
+              <a href="#" className="destroy" onClick={setButtonProps} data-part-id={part.id}>[ Destroy ]</a>
             </div>
           ))}
         </>

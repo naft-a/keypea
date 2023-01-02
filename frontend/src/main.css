@@ -4,6 +4,11 @@
   input/textarea: #1c1c1c
  */
 
+:root {
+  --focus: #5b9f5f;
+  --links: #5b9f5f;
+}
+
 pre {
   font-size: 0.9rem;
   white-space: pre-wrap;
@@ -15,6 +20,11 @@ pre {
 
 #heading img {
   transform: rotate(180deg);
+}
+
+a.destroy {
+  float: right;
+  color: #e33939;
 }
 
 nav a {

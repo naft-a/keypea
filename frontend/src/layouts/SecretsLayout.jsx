@@ -57,7 +57,7 @@ export default function SecretsLayout() {
           <Link to="/secrets">{"[ < Back ]"}</Link>
           <Link to="#" onClick={() => { setShowEditDialog(true) }}>[ Edit ]</Link>
           <Link to={`${currentPath}/parts`}>[ Parts ]</Link>
-          <Link to="#" onClick={() => { setShowDestroyDialog(true) }} style={{float: "right"}}>[ Destroy ]</Link>
+          <Link to="#" className="destroy" onClick={() => { setShowDestroyDialog(true) }}>[ Destroy ]</Link>
         </>
       )
     }
