@@ -15,6 +15,7 @@ module Gateway
           password = request.params[:password]
 
           parts = Services::SecretsService::DecryptSecretsParts.new(
+            username: Current.username,
             secret_id: secret_id,
             password: password
           ).call
