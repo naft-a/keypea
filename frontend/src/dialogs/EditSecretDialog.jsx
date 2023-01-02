@@ -1,7 +1,7 @@
 import Dialog from "../components/Dialog.jsx"
 import { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
-import {getSecret, getSecrets, updateSecret} from "../util/api"
+import { getSecret, updateSecret } from "../util/api"
 
 /**
  * @param {Boolean} isOpen

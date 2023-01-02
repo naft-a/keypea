@@ -52,10 +52,7 @@ export async function getSecret(id) {
   const secrets = await getSecrets()
   if (secrets?.error) { return secrets }
 
-  const secret =  secrets.find((s) => { return s.id === id })
-  // debugger
-
-  return secret
+  return secrets.find((s) => { return s.id === id })
 }
 
 /**
