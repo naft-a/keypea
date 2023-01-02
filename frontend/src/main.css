@@ -82,3 +82,12 @@ dialog button:after {
   color: gray;
 }
 
+#parts {
+  display: flex;
+  justify-content: space-between;
+}
+
+#parts a {
+  margin-top: auto;
+  margin-bottom: auto;
+}

@@ -12,7 +12,7 @@ export function useAuthenticated() {
 
     return () => {
       self.removeEventListener("authenticated",  () => { setAuthenticated(true) })
-      self.addEventListener("unauthenticated", () => { setAuthenticated(false) })
+      self.removeEventListener("unauthenticated", () => { setAuthenticated(false) })
     }
   })
 

@@ -52,7 +52,10 @@ export async function getSecret(id) {
   const secrets = await getSecrets()
   if (secrets?.error) { return secrets }
 
-  return secrets.find((s) => { return s.id === id })
+  const secret =  secrets.find((s) => { return s.id === id })
+  // debugger
+
+  return secret
 }
 
 /**
@@ -83,14 +86,14 @@ export async function updateSecret(id,payload) {
 }
 
 /**
- * @param {String} id
+ * @param {Object.<string>}
  * @return {Object}
  */
-export async function deleteSecret(id) {
+export async function deleteSecret({ secretId }) {
   return await makeRequest({
-    path: `/secrets/${id}`,
+    path: `/secrets/${secretId}`,
     method: "DELETE",
-    token: session.token,
+    token: session.token
   })
 }
 
@@ -105,6 +108,18 @@ export async function createSecretParts(id, payload) {
     method: "POST",
     token: session.token,
     body: JSON.stringify(payload)
+  })
+}
+
+/**
+ * @param {Object.<string>}
+ * @return {Object}
+ */
+export async function deleteSecretParts({ secretId, partId }) {
+  return await makeRequest({
+    path: `/secrets/${secretId}/parts/${partId}`,
+    method: "DELETE",
+    token: session.token
   })
 }
 

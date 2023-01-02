@@ -31,10 +31,11 @@ export default function DecryptDialog({ isOpen, setIsOpen, secretId, returnPath 
     }
 
     event.target.password.value = ""
-
     setIsOpen(false)
 
-    navigate(returnPath, {state: {parts: responseData}})
+    session.decryptedData = responseData
+
+    navigate(returnPath, {state: "decrypting"})
   }
 
   return (

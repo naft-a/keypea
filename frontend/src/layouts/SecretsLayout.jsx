@@ -2,8 +2,9 @@ import { useEffect, useState } from "react"
 import { Link, matchRoutes, Outlet, useLocation, useParams } from "react-router-dom"
 import { useAuthenticated } from "../util/hooks"
 import DecryptDialog from "../dialogs/DecryptDialog"
-import EditSecretDialog from "../dialogs/EditSecretDialog.jsx"
+import EditSecretDialog from "../dialogs/EditSecretDialog"
 import DestroyDialog from "../dialogs/DestroyDialog"
+import { deleteSecret } from "../util/api"
 
 export default function SecretsLayout() {
   const params = useParams()
@@ -107,7 +108,9 @@ export default function SecretsLayout() {
         <DestroyDialog
           isOpen={showDestroyDialog}
           setIsOpen={setShowDestroyDialog}
-          secretId={params.id} />}
+          apiMethod={deleteSecret}
+          params={{secretId: params.id}}
+          returnPath={`/secrets`}/>}
     </div>
   )
 }

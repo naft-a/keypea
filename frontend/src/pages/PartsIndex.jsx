@@ -1,6 +1,7 @@
-import { redirect, useLoaderData, useLocation } from "react-router-dom"
-import { useEffect, useState } from "react"
-import { getSecret } from "../util/api"
+import {Link, redirect, useLoaderData, useLocation, useParams} from "react-router-dom"
+import {useEffect, useRef, useState} from "react"
+import { deleteSecretParts, getSecret } from "../util/api"
+import DestroyDialog from "../dialogs/DestroyDialog.jsx"
 
 export async function partsLoader({ params }) {
   if (!session.token) { return redirect("/") }
@@ -17,29 +18,77 @@ export async function partsLoader({ params }) {
 
 export default function PartsIndex() {
   const location = useLocation()
+  const params = useParams()
   const parts = useLoaderData()
+
   const [data, setData] = useState(parts)
+  const [partId, setPartId] = useState(null)
+  const [showDestroyDialog, setShowDestroyDialog] = useState(false)
 
+  // sets parts data after destroying
   useEffect(() => {
-    if (!location.state) { return }
+    if (location.state === "destroying") {
+      setData(parts)
+    }
+  }, [parts])
 
-    setData(location.state.parts)
-  }, [location.state])
+  // sets parts data after decryption
+  useEffect(() => {
+    if (location.state === "decrypting") {
+      setData(session.decryptedData || parts)
+      session.decryptedData = null
+    }
+  }, [location])
 
-  const formatParts = (parts) => {
-    return parts.map((part) => {
-      const { id, ...rest } = part
+  const formatPart = (part) => {
+    const { id, ...rest } = part
 
-      return rest
-    })
+    return rest
+  }
+
+  const setButtonProps = (event) => {
+    setPartId(event.target.dataset.partId)
+    setShowDestroyDialog(true)
+  }
+
+
+  const render = (parts) => {
+    if (parts.length === 0) {
+      return (
+        <>
+          <h4>Nothing found here</h4>
+          <p>You don't seem to have any parts.</p>
+        </>
+      )
+    }
+
+    if (parts) {
+      return (
+        <>
+          {parts && parts.map((part) => (
+            <div id="parts" key={part.id}>
+              <pre>
+                {JSON.stringify(formatPart(part), undefined, 2)}
+              </pre>
+              <a href="#" onClick={setButtonProps} data-part-id={part.id}>[ Destroy ]</a>
+            </div>
+          ))}
+        </>
+      )
+    }
   }
 
   return (
-    <>
-      <br></br>
-      <pre>
-        {JSON.stringify(formatParts(data), undefined, 2)}
-      </pre>
-    </>
+    <section id="content">
+      {render(data)}
+
+      {(showDestroyDialog) &&
+        <DestroyDialog
+          isOpen={showDestroyDialog}
+          setIsOpen={setShowDestroyDialog}
+          apiMethod={deleteSecretParts}
+          params={{secretId: params.id, partId: partId}}
+          returnPath={`/secrets/${params.id}/parts`}/>}
+    </section>
   )
 }
