@@ -32,7 +32,7 @@ export default function SecretsLayout() {
   }, [location])
 
   const render = (currentPath) => {
-    // SecretNew
+    // SecretsNew
     if (currentPath === "/secrets/new") {
       return (
         <>
@@ -41,7 +41,7 @@ export default function SecretsLayout() {
       )
     }
 
-    // PartNew
+    // PartsNew
     if (currentPath === `/secrets/${params.id}/parts/new`) {
       return (
         <>
@@ -50,7 +50,7 @@ export default function SecretsLayout() {
       )
     }
 
-    // SecretShow
+    // SecretsShow
     if (isSecretPath) {
       return (
         <>
@@ -62,7 +62,7 @@ export default function SecretsLayout() {
       )
     }
 
-    // PartShow
+    // PartsIndex
     if (isPartsPath) {
       return (
         <>
@@ -73,7 +73,7 @@ export default function SecretsLayout() {
       )
     }
 
-    // SecretIndex
+    // SecretsIndex
     return (
       <>
         <Link to="/secrets/new" hidden={isSecretPath}>[ New ]</Link>

@@ -1,4 +1,4 @@
-import { Link, redirect, useLoaderData } from "react-router-dom"
+import { Link, useLoaderData } from "react-router-dom"
 import { getSecrets } from "../util/api"
 
 export async function secretsLoader() {
@@ -13,7 +13,7 @@ export async function secretsLoader() {
 }
 
 export default function SecretsIndex() {
-  const secrets = useLoaderData()
+  const loadedSecrets = useLoaderData()
 
   const render = (secrets) => {
     if (secrets instanceof Object && secrets.error) {
@@ -49,7 +49,7 @@ export default function SecretsIndex() {
 
   return(
     <section id="content">
-      {render(secrets)}
+      {render(loadedSecrets)}
     </section>
   )
 }

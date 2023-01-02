@@ -29,14 +29,14 @@ export default function DestroyDialog({ isOpen, setIsOpen, apiMethod, params, re
   }
 
   return (
-    <Dialog title="Destroying secret" isOpen={isOpen} onClose={() => { setIsOpen(false) }}>
+    <Dialog title="Destroying a record..." isOpen={isOpen} onClose={() => { setIsOpen(false) }}>
       <Form ref={form} method="delete" onSubmit={formSubmit}>
         <div>
-          {!confirmedOnce && <p>Are you sure you want to destroy this secret? This action is irreversible.</p>}
-          {confirmedOnce && <p>Just checking again!</p>}
+          {!confirmedOnce && <p>Are you sure you want to destroy this record?</p>}
+          {confirmedOnce && <p>Second check, this action is irreversible!</p>}
         </div>
-        <input name="submit" type="submit"
-               style={confirmedOnce ? {backgroundColor: "red"} : {}}
+        <input name="submit" type="submit" className="alert"
+               style={confirmedOnce ? {color: "white", backgroundColor: "red"} : {}}
                value={confirmedOnce ? "Yes, destroy it" : "Destroy"} />
       </Form>
     </Dialog>

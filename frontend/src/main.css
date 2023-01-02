@@ -83,6 +83,16 @@ dialog button:after {
   content: "❌";
 }
 
+dialog button:focus {
+  outline: none;
+  box-shadow: none;
+}
+
+dialog input.alert:focus {
+  outline: none;
+  box-shadow: none;
+}
+
 #content {
   margin-top: 1.5rem;
   margin-bottom: 1.5rem;
