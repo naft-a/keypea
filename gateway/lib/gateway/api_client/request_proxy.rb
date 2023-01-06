@@ -22,7 +22,7 @@ module Gateway
 
       # @raise [Errors::TimeoutError]
       # @raise [Errors::ConnectionError]
-      # Return [Gateway::APIClient::Response]
+      # @return [Gateway::APIClient::Response]
       def perform
         response = @client.request(request)
         Response.new(response).handle

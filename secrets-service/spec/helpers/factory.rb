@@ -6,7 +6,6 @@ module Factory
     # Creates a secret record with a key attached to it
     #
     # @param user_id [String]
-    # @param password [String]
     # @return [Mongoid::Document, nil]
     def self.create!(user_id: nil)
       user_id ||= "test-#{rand(999)}"

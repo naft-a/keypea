@@ -6,7 +6,7 @@ RSpec.describe DecryptSecretsParts, type: :service do
 
   describe ".new" do
     it "initializes the service" do
-      service = described_class.new(secret_id: "id", password: "pwd")
+      service = described_class.new(username: "test", secret_id: "id", password: "pwd")
       expect(service).to be_instance_of Gateway::Services::SecretsService::DecryptSecretsParts
     end
   end
@@ -32,7 +32,10 @@ RSpec.describe DecryptSecretsParts, type: :service do
     end
 
     it "returns a new secret structure" do
-      service_call = described_class.new(secret_id: "id", password: "pwd").call
+      allow_any_instance_of(Gateway::Services::AuthService::Authenticate)
+        .to receive(:call).and_return(Gateway::Structures::User)
+
+      service_call = described_class.new(username: "test", secret_id: "id", password: "pwd").call
       expect(service_call).to be_instance_of Array
       expect(service_call.first).to be_instance_of Gateway::Structures::Part
     end

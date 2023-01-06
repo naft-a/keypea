@@ -24,6 +24,7 @@ RSpec.describe Create, type: :service do
             "user_id" => "123",
             "name" => "new",
             "description" => "ok a real one",
+            "parts" => [],
             "created_at" => 1671456713,
             "updated_at" => 1671456713
           }
@@ -31,23 +32,14 @@ RSpec.describe Create, type: :service do
       end
     end
 
-    # TODO: fix mocking
-    # it "returns a new secret structure" do
-    #   service_call = described_class.new(
-    #     user_id: "123",
-    #     username: "xaxa",
-    #     password: "xaxa",
-    #     name: "new-from-service",
-    #     description: "ok?",
-    #     parts: [
-    #       {
-    #         key: "happened",
-    #         value: "really?"
-    #       }
-    #     ]
-    #   ).call
-    #   expect(service_call).to be_instance_of Gateway::Structures::Secret
-    # end
+    it "returns a new secret structure" do
+      service_call = described_class.new(
+        user_id: "123",
+        name: "new-from-service",
+        description: "ok?"
+      ).call
+      expect(service_call).to be_instance_of Gateway::Structures::Secret
+    end
   end
 
 end

@@ -4,7 +4,6 @@ require "spec_helper"
 
 include Api::V1
 
-# TODO: create records and test the response
 describe Endpoints::ListSecrets, type: :api_endpoint do
   USER_ID = "test-list-user".freeze
 
