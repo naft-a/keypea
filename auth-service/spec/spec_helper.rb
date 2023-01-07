@@ -12,6 +12,7 @@ require "pry-remote"
 Dotenv.load("../.env.test")
 
 require_relative "../config/mongoid"
+
 require_relative "../models/user"
 
 require_relative "../api/v1/base"

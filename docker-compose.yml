@@ -1,0 +1,36 @@
+version: "3.9"
+
+services:
+
+  mongo:
+    image: mongo
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: secret
+
+  auth_service:
+    image: keypea/auth-service
+    build:
+      context: auth-service
+      dockerfile: ./Dockerfile
+    environment:
+      MONGODB_HOST: mongo:27017
+      MONGODB_USERNAME: root
+      MONGODB_PASSWORD: secret
+      MONGODB_DATABASE: auth-service-dev
+    ports:
+      - "5002:5002"
+
+  secrets_service:
+    image: keypea/secrets-service
+    build:
+      context: secrets-service
+      dockerfile: ./Dockerfile
+    environment:
+      MONGODB_HOST: mongo:27017
+      MONGODB_USERNAME: root
+      MONGODB_PASSWORD: secret
+      MONGODB_DATABASE: auth-service-dev
+    ports:
+      - "5003:5003"

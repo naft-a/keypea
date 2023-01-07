@@ -5,5 +5,3 @@
 /tmp/*
 !/log/.keep
 !/tmp/.keep
-
-mongoid.yml
