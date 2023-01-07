@@ -1,12 +1,17 @@
 # frozen_string_literal: true
 
-# require "./app"
+ENV["RACK_ENV"] = "test"
+
 require "apia"
 require "apia/rack"
 require "bcrypt"
+require "dotenv"
 require "mongoid"
 require "pry-remote"
 
+Dotenv.load("../.env.test")
+
+require_relative "../config/mongoid"
 require_relative "../models/user"
 
 require_relative "../api/v1/base"
@@ -16,11 +21,6 @@ require_relative "../api/v1/endpoints/get_user"
 
 require_relative "./helpers/api_helpers"
 require_relative "./helpers/factory"
-
-ENV["RACK_ENV"] = "test"
-
-Mongoid.load!(File.join(File.dirname(__FILE__), "../mongoid.yml"))
-Mongoid.raise_not_found_error = false
 
 RSpec.configure do |config|
   config.include Factory

@@ -10,12 +10,20 @@ end
 gem "apia", "~> 3.0"
 gem "bcrypt"
 gem "mongoid", "~> 8.0.2"
+gem "puma"
 gem "rack"
 gem "rack-console"
-gem "rspec", require: false
+
+group :development, :test do
+  gem "dotenv"
+end
 
 group :development do
-  gem "pry-remote"
   gem "rubocop", require: false
   gem "rubocop-rspec", require: false
+end
+
+group :test do
+  gem "pry-remote"
+  gem "rspec", require: false
 end
