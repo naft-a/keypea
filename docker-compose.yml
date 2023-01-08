@@ -2,35 +2,111 @@ version: "3.9"
 
 services:
 
+  caddy:
+    image: lucaslorentz/caddy-docker-proxy:ci-alpine
+    ports:
+      - "80:80"
+      - "443:443"
+    environment:
+      - CADDY_INGRESS_NETWORKS=reverse-proxy
+    networks:
+      - reverse-proxy
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - caddy_data:/data
+    restart: unless-stopped
+
   mongo:
     image: mongo
     restart: always
     environment:
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: secret
+    networks:
+      - reverse-proxy
+    volumes:
+      - db:/data/db
 
-  auth_service:
+  redis:
+    image: redis
+    restart: always
+    ports:
+      - '6379:6379'
+    volumes:
+      - cache:/data
+
+  auth-service:
     image: keypea/auth-service
+    depends_on:
+      - mongo
+      - caddy
     build:
       context: auth-service
       dockerfile: ./Dockerfile
+    networks:
+      - reverse-proxy
+    labels:
+      caddy: auth.localhost
+      caddy.tls: internal
+      caddy.reverse_proxy: "{{upstreams 5002}}"
     environment:
+      RACK_ENV: production
       MONGODB_HOST: mongo:27017
       MONGODB_USERNAME: root
       MONGODB_PASSWORD: secret
       MONGODB_DATABASE: auth-service-dev
-    ports:
-      - "5002:5002"
 
   secrets_service:
     image: keypea/secrets-service
+    depends_on:
+      - mongo
+      - caddy
     build:
       context: secrets-service
       dockerfile: ./Dockerfile
+    networks:
+      - reverse-proxy
+    labels:
+      caddy: secrets.localhost
+      caddy.tls: internal
+      caddy.reverse_proxy: "{{upstreams 5003}}"
     environment:
+      RACK_ENV: production
       MONGODB_HOST: mongo:27017
       MONGODB_USERNAME: root
       MONGODB_PASSWORD: secret
       MONGODB_DATABASE: auth-service-dev
+
+  gateway:
+    image: keypea/gateway
+    depends_on:
+      - redis
+      - caddy
+    build:
+      context: gateway
+      dockerfile: ./Dockerfile
+    networks:
+      - reverse-proxy
+    labels:
+      caddy: gateway.localhost
+      caddy.tls: internal
+      caddy.reverse_proxy: "{{upstreams 5001}}"
+    environment:
+      HANAMI_ENV: production
+      HMAC_SECRET: tpJuMpJfJVzFcVUNebwgTYwJQFVCxyhEBqUUfCUuVTdjkSUnUd
+      AUTH_API_HOST: auth.localhost
+      SECRETS_API_HOST: secrets.localhost
+      REDIS_URL: redis://redis:6379/0
     ports:
-      - "5003:5003"
+      - "5001:5001"
+
+volumes:
+  caddy_data: {}
+  db:
+    driver: local
+  cache:
+    driver: local
+
+networks:
+  reverse-proxy:
+    name: reverse-proxy
