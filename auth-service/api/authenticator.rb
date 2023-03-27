@@ -15,9 +15,9 @@ module Api
 
     def call
       given_token = request.headers["authorization"]&.sub(/\ABearer /, "")
-      case given_token
-      when "example"
-        request.identity = { name: "Example User", id: 1234 }
+
+      if given_token == ENV["API_TOKEN"]
+        request.identity = { name: "gateway", id: request.headers["host"] || nil }
       else
         raise_error "Api/Authenticator/InvalidToken", given_token: given_token.to_s
       end
