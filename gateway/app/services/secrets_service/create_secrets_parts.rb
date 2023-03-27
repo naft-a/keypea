@@ -24,7 +24,7 @@ module Gateway
         def call
           AuthService::Authenticate.new(username: @username, password: @password).call
 
-          make_request(:secrets_api_host, :post, "/secrets/:secret/parts") do |request|
+          make_request(:secrets_api, :post, "/secrets/:secret/parts") do |request|
             request.arguments[:secret] = @secret_id
             request.arguments[:password] = @password
             request.arguments[:key] = @key

@@ -14,7 +14,7 @@ module Gateway
         # @raise [Gateway::Errors::StructErrors::AttributeError]
         # @return [Array<Secret>]
         def call
-          make_request(:secrets_api_host, :get, "/secrets") do |request|
+          make_request(:secrets_api, :get, "/secrets") do |request|
             request.arguments[:user_id] = @user_id
 
             response = request.perform

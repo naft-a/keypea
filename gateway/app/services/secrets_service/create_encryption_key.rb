@@ -16,7 +16,7 @@ module Gateway
         # @raise [Gateway::Errors::StructErrors::AttributeError]
         # @return [Hash]
         def call
-          make_request(:secrets_api_host, :post, "/encryption_keys") do |request|
+          make_request(:secrets_api, :post, "/encryption_keys") do |request|
             request.arguments[:user_id] = @user_id
             request.arguments[:password] = @password
 

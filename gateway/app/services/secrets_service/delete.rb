@@ -14,7 +14,7 @@ module Gateway
         # @raise [Gateway::Errors::StructErrors::AttributeError]
         # @return [Gateway::Structures::Secret]
         def call
-          make_request(:secrets_api_host, :delete, "/secrets/:secret") do |request|
+          make_request(:secrets_api, :delete, "/secrets/:secret") do |request|
             request.arguments[:secret] = @secret_id
 
             response = request.perform

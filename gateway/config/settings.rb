@@ -8,7 +8,11 @@ module Gateway
 
     setting :hmac_secret, constructor: Types::String
     setting :auth_api_host, constructor: Types::String
+    setting :auth_api_port, default: "443", constructor: Types::String
+    setting :auth_api_secret, constructor: Types::String
     setting :secrets_api_host, constructor: Types::String
+    setting :secrets_api_port, default: "443", constructor: Types::String
+    setting :secrets_api_secret, constructor: Types::String
     setting :redis_url, constructor: Types::String
   end
 end

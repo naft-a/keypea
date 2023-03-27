@@ -12,11 +12,12 @@ module Gateway
     # @return request [RequestProxy]
     def make_request(host, method, path, &block)
       client = Client.new(
-        host: SETTINGS.send(host),
+        host: SETTINGS.send("#{host}_host"),
+        port: SETTINGS.send("#{host}_port") || 443,
         namespace: "/core/v1",
         ssl: true,
         headers: {
-          "Authorization" => "Bearer example"
+          "Authorization" => "Bearer #{SETTINGS.send("#{host}_secret")}"
         }
       )
 

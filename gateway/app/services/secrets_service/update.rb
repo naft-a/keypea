@@ -18,7 +18,7 @@ module Gateway
         # @raise [Gateway::Errors::StructErrors::AttributeError]
         # @return [Secret]
         def call
-          make_request(:secrets_api_host, :patch, "/secrets/:secret") do |request|
+          make_request(:secrets_api, :patch, "/secrets/:secret") do |request|
             request.arguments[:secret] = @secret_id
             request.arguments[:properties] = {
               name: @name,

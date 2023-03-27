@@ -14,7 +14,7 @@ module Gateway
         # @raise [Gateway::Errors::StructErrors::AttributeError]
         # @return [Gateway::Structures::User]
         def call
-          make_request(:auth_api_host, :get, "/users/:user") do |request|
+          make_request(:auth_api, :get, "/users/:user") do |request|
             request.arguments[:user] = @user_id
 
             response = request.perform

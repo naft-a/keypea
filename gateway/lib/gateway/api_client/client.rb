@@ -9,8 +9,9 @@ module Gateway
       def initialize(**options)
         @headers = options[:headers]
         @namespace = options[:namespace]
-        @http = Net::HTTP.new(options[:host], options[:ssl] ? 443 : 80)
+        @http = Net::HTTP.new(options[:host], options[:port])
         @http.use_ssl = options[:ssl]
+        @http.verify_mode = OpenSSL::SSL::VERIFY_NONE
         @http.read_timeout = options[:http_read_timeout] || 60
         @http.open_timeout = options[:http_open_timeout] || 10
       end
