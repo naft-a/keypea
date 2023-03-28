@@ -1,0 +1,22 @@
+name: Frontend | Trigger a render deployment
+
+on:
+  push:
+    branches: [ "main" ]
+    paths:
+      - 'frontend/**'
+      - '.github/workflows/frontend.yml'
+
+env:
+  REGISTRY: ghcr.io
+  IMAGE_NAME: ${{ github.repository }}
+
+jobs:
+  trigger-deployment:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: curl
+        uses: wei/curl@v1.1.1
+        with:
+          args: https://original.onyx-sites.io/
