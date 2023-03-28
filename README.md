@@ -1,10 +1,6 @@
-<div style="flex: auto">
-  <h1 style="float: left">Keypea</h1>
-  <p align="left">
-    <img alt="keypea" src="https://keypea.app/assets/pea-c10e0357.svg" width="150" style="transform: rotate(180deg)">
-  </p>
-  <br />
-</div>
+<h1>
+  <span>Keypea <img alt="keypea" src="https://keypea.app/assets/pea-c10e0357.svg" width="50" style="transform: rotate(180deg)"></span>
+</h1>
 
 Keypea is an app that stores encrypted secrets in a database and can be seen running at [keypea.app](https://keypea.app). This is (probably) nothing more than an attempt to implement and deploy a real-life micro-service architecture in a monorepo. The app uses a bunch of different tech, but it's mostly kept simple to show what can be done with as few dependencies as possible. It is built in 4 parts:
 
