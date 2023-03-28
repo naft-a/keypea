@@ -19,4 +19,4 @@ jobs:
       - name: curl
         uses: wei/curl@v1.1.1
         with:
-          args: https://original.onyx-sites.io/
+          args: {{ secrets.RENDER_WEBHOOK }}
