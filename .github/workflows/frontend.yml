@@ -19,4 +19,4 @@ jobs:
       - name: curl
         uses: wei/curl@v1.1.1
         with:
-          args: {{ secrets.RENDER_WEBHOOK }}
+          args: ${{ secrets.RENDER_WEBHOOK }}
