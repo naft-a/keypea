@@ -11,7 +11,7 @@ threads threads_count, threads_count
 
 # Specifies the `port` that Puma will listen on to receive requests, default is 5002.
 #
-port ENV.fetch("PUMA_PORT") { 5002 }
+port ENV.fetch("PUMA_PORT", ENV.fetch("PORT", 5002))
 
 # Specifies the number of `workers` to boot in clustered mode.
 # Workers are forked webserver processes. If using threads and workers together
