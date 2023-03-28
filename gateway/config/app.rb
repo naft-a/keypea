@@ -10,7 +10,7 @@ module Gateway
 
     config.middleware.use Rack::Cors do
       allow do
-        origins "https://frontend.localhost"
+        origins "https://frontend.localhost", "https://keypea.app", "https://keypea-client.onrender.com"
         resource "*", headers: :any, methods: :any
       end
     end
