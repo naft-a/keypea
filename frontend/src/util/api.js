@@ -143,7 +143,7 @@ async function makeRequest({...params}) {
     "Accept": "application/json"
   }
 
-  return await fetch(`https://gateway.localhost${path}`, {
+  return await fetch(`https://gateway.keypea.app${path}`, {
     method: method,
     headers: {...(token) && {"Authorization": `Bearer ${token}`}, ...defaultHeaders},
     body: body
