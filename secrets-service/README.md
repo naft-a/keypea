@@ -3,7 +3,6 @@
 This is the rack service that deals with encrypting/decrypting and storing secrets
 
 ## Configuration
-___
 All configuration of this application is carried out using environment variables. The following environment variables are supported for this application.
 
 - `MONGODB_HOST` - the hostname of the Mongodb server (default: localhost: 27017)
@@ -14,3 +13,7 @@ All configuration of this application is carried out using environment variables
 - `PUMA_PORT` - used to set the listening port for whichever process is being started (default: 5003)
 - `PUMA_WORKERS` - the maximum number of workers to boot (default: 2)
 - `PUMA_THREADS` - the maximum number of threads to allow to be used for web requests (default: 10)
+
+## Running
+1) `bundle`
+2) `./bin/dev`
