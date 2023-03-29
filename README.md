@@ -39,12 +39,64 @@ Keypea is an app that stores encrypted secrets in a database and can be seen run
 The whole project can be run in two ways:
 
 - `docker-compose`
-- `foreman`
-  - `docker run --rm --name container-redis -d redis`
-  - `docker run -d --name container-mongo -p 27017:27017 -d --restart always -e MONGO_INITDB_ROOT_USERNAME=mongoadmin -e MONGO_INITDB_ROOT_PASSWORD=secret mongo`
-  - Requires `gem install foreman`
-  - `cd auth-service/ && bundle`
-  - `cd ../secrets-service/ && bundle`
-  - `cd ../gateway/ && bundle`
-  - `cd ../frontend/ && yarn install`
-  - `cd ../ && formean start`
+- `foreman` (for development)
+
+### Foreman 
+You'll need to go through a quick setup before we run the whole thing
+
+1) Run `redis` container locally:
+  ```
+    docker run --rm --name container-redis -d redis
+  ```
+
+2) Run `mongodb` container locally:
+  ```
+    docker run -d --name container-mongo -p 27017:27017 -d --restart always -e MONGO_INITDB_ROOT_USERNAME=mongoadmin -e MONGO_INITDB_ROOT_PASSWORD=secret mongo
+  ```
+
+3) Install foreman: `gem install foreman`
+4) Install auth service dependencies and create db indexes:
+  ```
+    cd auth-service/ && bundle && rake db:mongoid:create_indexes
+  ```
+5) Then install secrets service dependencies and create db indexes:
+  ```
+    cd ../secrets-service/ && bundle && rake db:mongoid:create_indexes
+  ```
+6) Install gateway dependencies:
+  ```
+    cd ../gateway/ && bundle
+  ```
+7) Install frontend dependencies:
+  ```
+    cd ../frontend/ && yarn install
+  ```
+8) Start foreman
+  ```
+    cd ../ && formean start
+  ```
+
+Visit each project's readme for more information about environment variables and defaults used within the app. You'd also need a reverse proxy such as [caddy](https://caddyserver.com/) to route local subdomains based on each port of the app.
+
+#### Example Caddyfile
+```
+frontend.localhost {
+	reverse_proxy localhost:9001
+	tls internal
+}
+
+gateway.localhost {
+	reverse_proxy localhost:5001
+	tls internal
+}
+
+auth.localhost {
+	reverse_proxy localhost:5002
+	tls internal
+}
+
+secrets.localhost {
+	reverse_proxy localhost:5003
+	tls internal
+}
+```
