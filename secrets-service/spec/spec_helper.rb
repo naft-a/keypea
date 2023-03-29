@@ -9,7 +9,7 @@ require "openssl"
 require "mongoid"
 require "pry-remote"
 
-Dotenv.load("../.env.test")
+Dotenv.load(".env.test")
 
 require_relative "../config/mongoid"
 

@@ -2,6 +2,23 @@
   <span>Keypea <img alt="keypea" src="https://keypea.app/assets/pea-c10e0357.svg" width="50" style="transform: rotate(180deg)"></span>
 </h1>
 
+<a href="https://raw.githubusercontent.com/naft-a/keypea/main/LICENSE">
+  <img src="https://img.shields.io/github/license/naft-a/keypea.svg?style=flat" alt="license status">
+</a>
+
+<a href="https://github.com/naft-a/keypea/actions">
+  <img src="https://img.shields.io/github/actions/workflow/status/naft-a/keypea/gateway.yml?label=gateway%20build" alt="license status">
+</a>
+
+<a href="https://github.com/naft-a/keypea/actions">
+  <img src="https://img.shields.io/github/actions/workflow/status/naft-a/keypea/auth-service.yml?label=auth%20service%20build" alt="license status">
+</a>
+
+<a href="https://github.com/naft-a/keypea/actions">
+  <img src="https://img.shields.io/github/actions/workflow/status/naft-a/keypea/secrets-service.yml?label=secrets%20service%20build" alt="license status">
+</a>
+
+
 Keypea is an app that stores encrypted secrets in a database and can be seen running at [keypea.app](https://keypea.app). This is (probably) nothing more than an attempt to implement and deploy a real-life micro-service architecture in a monorepo. The app uses a bunch of different tech, but it's mostly kept simple to show what can be done with as few dependencies as possible. It is built in 4 parts:
 
 - The authentication service `auth-service` is a `rack` application that handles user CRUD and user authentication, it requires its own `mongodb` instance to persist data.
