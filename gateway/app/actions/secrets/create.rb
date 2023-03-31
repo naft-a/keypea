@@ -7,7 +7,7 @@ module Gateway
 
         params do
           required(:name).filled(:string)
-          required(:description).filled(:string)
+          optional(:description).value(:string)
         end
 
         def handle(request, response)
