@@ -1,4 +1,4 @@
-import { useState } from "react";
+import {useEffect, useState} from "react";
 import { Outlet, NavLink, Link, useLocation } from "react-router-dom"
 import { useAuthenticated } from "../util/hooks"
 import LoginDialog from "../dialogs/LoginDialog"
@@ -7,7 +7,7 @@ import Logo from "../assets/pea.svg"
 export default function MainLayout() {
   const location = useLocation()
   const authenticated = useAuthenticated()
-  const [showDialog, setShowDialog] = useState(!authenticated)
+  const [showDialog, setShowDialog] = useState(window.location.pathname === "/signup" ? false : !authenticated)
 
   return (
     <>
