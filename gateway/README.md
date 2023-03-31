@@ -7,6 +7,7 @@ ___
 All configuration of this application is carried out using environment variables. The following environment variables are supported for this application.
 
 - `HMAC_SECRET` - the hmac secret for JWT
+- `CORS_ORIGIN` - the cors origin domain (default: https://frontend.localhost) 
 - `AUTH_API_HOST` - the hostname of the auth api service (default: auth.localhost)
 - `AUTH_API_PORT` - the port of the auth api
 - `AUTH_API_SECRET` - the secret key for the auth api
