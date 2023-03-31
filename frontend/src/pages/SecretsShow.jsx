@@ -20,9 +20,6 @@ export default function SecretsShow() {
   const formatSecret = (secret) => {
     const { id, user_id, ...rest } = secret
 
-    rest["created_at"] = new Date(rest["created_at"]).toString()
-    rest["updated_at"] = new Date(rest["updated_at"]).toString()
-
     return rest
   }
 

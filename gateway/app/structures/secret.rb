@@ -20,8 +20,8 @@ module Gateway
         @name = attributes.fetch(:name)
         @description = attributes.fetch(:description)
         @parts = attributes.fetch(:parts).map { |part_attributes| Part.new(**part_attributes) }
-        @created_at = attributes.fetch(:created_at)
-        @updated_at = attributes.fetch(:updated_at)
+        @created_at = Time.at(attributes.fetch(:created_at))
+        @updated_at = Time.at(attributes.fetch(:updated_at))
       end
 
     end
