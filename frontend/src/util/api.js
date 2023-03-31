@@ -143,7 +143,7 @@ async function makeRequest({...params}) {
     "Accept": "application/json"
   }
 
-  return await fetch(`https://gateway.keypea.app${path}`, {
+  return await fetch(`${import.meta.env.VITE_GATEWAY_HOST}${path}`, {
     method: method,
     headers: {...(token) && {"Authorization": `Bearer ${token}`}, ...defaultHeaders},
     body: body

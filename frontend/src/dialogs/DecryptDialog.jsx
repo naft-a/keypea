@@ -46,7 +46,7 @@ export default function DecryptDialog({ isOpen, setIsOpen, secretId, returnPath 
       <form method="post" onSubmit={formSubmit}>
         <label>Password</label>
         <input name="password" type="password" required={true}/>
-        <input name="submit" type="submit" value="Decrypts" />
+        <input name="submit" type="submit" value="Decrypt" />
       </form>
     </Dialog>
   )
