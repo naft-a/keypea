@@ -9,7 +9,8 @@ export default function Home() {
     <section id="content">
       <h2>What is it?</h2>
       <p>
-        Keypea is an online wallet that holds all your secrets in an encrypted database designed to keep your secrets safe, ensuring that only you have access to your information.
+        Keypea is a prototype of an online wallet that holds all your secrets in an encrypted database designed to keep your secrets safe, ensuring that only you have access to your information.
+        <p><b>Please note that as a prototype, Keypea is still in development (and will probably always be) and may not provide the same level of security, i.e. there's no real validation of credentials entered in the app.</b></p>
       </p>
       <h2>How does it work?</h2>
       <p>
