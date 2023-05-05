@@ -40,7 +40,7 @@ export default function Signup() {
       {data && data.error && <code>{data.error}</code>}
       <Form method="post" action="/signup">
         <label>Username</label>
-        <input name="username" placeholder="Your username.." />
+        <input name="username" required={true} placeholder="Your username.." />
         <label>Password</label>
         <input className={!matches ? "mismatch" : ""} name="password" type="password" onChange={ e => setPassword(e.target.value) } />
         <label>Confirm Password</label>
